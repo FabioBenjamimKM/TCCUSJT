@@ -1,13 +1,17 @@
 package com.usjt.tcc.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
 
 @Entity
-public class Conta {
+public class Usuario {
 	
 	@Id
 	@Column(nullable = false)
@@ -15,6 +19,29 @@ public class Conta {
 	
 	@Column(nullable = false)
 	private String senha;
+	
+	@Column(nullable = false)
+	private String cpf;
+	
+	@JoinColumn(unique = true)
+	@OneToOne
+	private Perfil perfil;
+	
+	public Perfil getPerfil() {
+		return perfil;
+	}
+	
+	public void setPerfil(Perfil perfil) {
+		this.perfil = perfil;
+	}
+	
+	public String getCpf() {
+		return cpf;
+	}
+	
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
 	
 	public String getEmail() {
 		return email;
