@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.usjt.tcc.model.Conta;
 
-public interface Contas extends JpaRepository<Conta, String>{
+public interface ContaRepository extends JpaRepository<Conta, String>{
 
 }

@@ -11,7 +11,7 @@ public class Investimento {
 	
 	@Id
 	@Column(nullable = false)
-	private int id;
+	private Long id;
 	
 	@Column(nullable = false)
 	private float valor;
@@ -20,5 +20,5 @@ public class Investimento {
 	private Date dataInclusao;
 	
 	@Column(nullable = false)
-	private int idTipoInvestimento;
+	private Long idTipoInvestimento;
 }

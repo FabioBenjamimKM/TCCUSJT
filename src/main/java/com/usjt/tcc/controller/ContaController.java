@@ -1,4 +1,4 @@
-package com.usjt.tcc.resource;
+package com.usjt.tcc.controller;
 
 import java.util.Optional;
 
@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.usjt.tcc.model.Conta;
-import com.usjt.tcc.repository.Contas;
+import com.usjt.tcc.repository.ContaRepository;
 
 @RestController
 @RequestMapping("/login")
-public class ContasResource {
+public class ContaController {
 	
 	@Autowired
-	private Contas contas;
+	private ContaRepository contas;
 	
 	@PostMapping
 	public Conta createConta(@RequestBody Conta conta) {
