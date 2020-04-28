@@ -7,5 +7,5 @@ import com.usjt.tcc.model.Investimento;
 
 @Repository
 public interface InvestimentoRepository extends JpaRepository<Investimento, Long>{
-
+	
 }

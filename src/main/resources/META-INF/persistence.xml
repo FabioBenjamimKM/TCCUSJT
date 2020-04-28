@@ -8,10 +8,6 @@
 
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-		<class>com.usjt.tcc.model.Conta</class>
-		<class>com.usjt.tcc.model.Investimento</class>
-		<class>com.usjt.tcc.model.TipoInvestimento</class>
-
 		<properties>
 
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
