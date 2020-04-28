@@ -1,4 +1,4 @@
-package com.usjt.tcc.controllers;
+package com.usjt.tcc.controller;
 
 import java.util.Optional;
 
@@ -32,7 +32,6 @@ public class UsuariosController {
 	@PostMapping("/{Autentica}")
 	public ResponseEntity<Boolean> Login(@RequestBody Usuario usuarioRequest) {
 		Optional<Usuario> usuario = usuarios.findById(usuarioRequest.getEmail());
-		
 		if (usuario != null && usuario.get().getSenha().equals(usuarioRequest.getSenha())) {
 			return ResponseEntity.ok(true);	
 		} else {
