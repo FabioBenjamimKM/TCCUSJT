@@ -14,14 +14,14 @@ import javax.persistence.OneToOne;
 public class Usuario {
 	
 	@Id
-	@Column(nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@Column(nullable = false , unique = true)
 	private String email;
 	
 	@Column(nullable = false)
 	private String senha;
-	
-	@Column(nullable = false)
-	private String cpf;
 	
 	@JoinColumn(unique = true)
 	@OneToOne
@@ -31,16 +31,16 @@ public class Usuario {
 		return perfil;
 	}
 	
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 	public void setPerfil(Perfil perfil) {
 		this.perfil = perfil;
-	}
-	
-	public String getCpf() {
-		return cpf;
-	}
-	
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
 	}
 	
 	public String getEmail() {

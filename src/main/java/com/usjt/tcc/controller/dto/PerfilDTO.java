@@ -1,59 +1,57 @@
-package com.usjt.tcc.model;
+package com.usjt.tcc.controller.dto;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.MapsId;
-import javax.persistence.OneToOne;
 
-@Entity
-public class Perfil {
+import com.usjt.tcc.model.Perfil;
+
+public class PerfilDTO {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public PerfilDTO() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public PerfilDTO(Perfil perfil) {
+		this.id = perfil.getId();
+		this.cpf = perfil.getCpf();
+		this.nome = perfil.getNome();
+		this.endereco = perfil.getEndereco();
+		this.idade = perfil.getIdade();
+		this.sexo = perfil.getSexo();
+		this.Estado = perfil.getEstado();
+	}
+	
 	private Long id;
 	
-	@Column(nullable = false, unique = true)
 	private String cpf;
-	
-	@Column(nullable = false)
+
 	private String nome;
-	
-	@Column(nullable = false)
+
 	private String endereco;
-	
-	@Column(nullable = false)
+
 	private Integer idade;
-	
-	@Column(nullable = false)
+
 	private String telefone;
-	
-	@Column(nullable = false)
+
 	private String sexo;
 	
-	@Column(nullable = false)
 	private String Estado;
-
+	
 	public Long getId() {
 		return id;
 	}
-	
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
 	public String getCpf() {
 		return cpf;
 	}
-	
+
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	
+
 	public String getNome() {
 		return nome;
 	}
@@ -100,5 +98,9 @@ public class Perfil {
 
 	public void setEstado(String estado) {
 		Estado = estado;
+	}
+
+	public static PerfilDTO converter(Perfil perfil) {
+		return new PerfilDTO(perfil);
 	}
 }
