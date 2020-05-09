@@ -1,5 +1,7 @@
 package com.usjt.tcc.model;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,10 +10,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 
 @Entity
-public class Usuario {
+@Table(name="TB_USUARIO")
+public class Usuario implements Serializable{
+	
+	private static final long serialVersionUID = 1;
 	
 	@Id
 	@Column(nullable = false)

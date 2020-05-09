@@ -1,20 +1,31 @@
 package com.usjt.tcc.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-public class Investimento {
+@Table(name="TB_INVESTIMENTO")
+public class Investimento implements Serializable{
+	
+	private static final long serialVersionUID = 1;
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(nullable = false)
-	private Long id;
+	private long id;
 	
 	@Column(nullable = false)
-	private float valor;
+	private float valorInicial;
+	
+	@Column(nullable = false)
+	private float valorMensal;
 	
 	@Column(nullable = false)
 	private Date dataInclusao;
@@ -28,14 +39,6 @@ public class Investimento {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public float getValor() {
-		return valor;
-	}
-
-	public void setValor(float valor) {
-		this.valor = valor;
 	}
 
 	public Date getDataInclusao() {
@@ -52,5 +55,21 @@ public class Investimento {
 
 	public void setIdTipoInvestimento(Long idTipoInvestimento) {
 		this.idTipoInvestimento = idTipoInvestimento;
+	}
+
+	public float getValorInicial() {
+		return valorInicial;
+	}
+
+	public void setValorInicial(float valorInicial) {
+		this.valorInicial = valorInicial;
+	}
+
+	public float getValorMensal() {
+		return valorMensal;
+	}
+
+	public void setValorMensal(float valorMensal) {
+		this.valorMensal = valorMensal;
 	}
 }

@@ -1,5 +1,7 @@
 package com.usjt.tcc.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -7,9 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
-public class Perfil {
+@Table(name="TB_PERFIL")
+public class Perfil implements Serializable{
+	
+	private static final long serialVersionUID = 1;
 	
 	@Id
 	@Column(nullable = false)

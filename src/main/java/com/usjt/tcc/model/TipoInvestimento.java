@@ -1,15 +1,24 @@
 package com.usjt.tcc.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-public class TipoInvestimento {
+@Table(name="TB_TIPO_INVESTIMENTO")
+public class TipoInvestimento implements Serializable{
+	
+	private static final long serialVersionUID = 1;
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(nullable = false)
-	private Long id;
+	private long id;
 	
 	@Column(nullable = false)
 	private String descricao;
