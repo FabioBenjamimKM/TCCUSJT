@@ -12,7 +12,8 @@ def main():
     # https://alpha-vantage.readthedocs.io/en/latest/index.html
     mysql_user = input('Insert your MySQL username')
     mysql_password = input('Insert your MySQL password')
-    api_key = input('Insert your api key, you can get one here: "https://www.alphavantage.co/support/#api-key"')
+    with open('.api_key') as f:
+        api_key = f.readline().strip()
     mysql_obj = MySQL('localhost', mysql_user, mysql_password, 'sistema_investimento')
     import_obj = Import(mysql_obj, api_key)
     import_obj.run()
