@@ -32,3 +32,6 @@ build/
 
 ### Python Env ###
 data_app/venv
+
+### API Key ###
+data_app/.api_key
