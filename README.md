@@ -3,36 +3,14 @@ Investimento
 
 #Rotas Api
 
-GET /api/investimentos
-Obter todos os investimentos.
+GET /api/transacoes - obter todas as transações.
 
-GET /api/investimento/{id}
-Obter um investimento de acordo com o id passado na url.
+GET /api/transacao/{id} - obter uma transação de acordo com o id passado na url.
 
-GET /investimento/delete/{id}
-Deletar um investimento de acordo com o id passado na url.
+GET /api/transacao/prever/{id}&{data} - prever valor da transação em uma data.
 
-POST /investimento
-Inserir ou Atualizar um investimento.
+DELETE /transacao - deletar uma transação.
 
-Headers exemplo:
-[{"key":"Content-Type","value":"application/json","description":""}]
+POST /transacao - inserir uma transação.
 
-Body Inserir exemplo:
-
-{
-    "valorInicial": 1750,
-    "valorMensal": 200,
-    "dataInclusao": "2020-05-08",
-    "idTipoInvestimento": 1
-}
-
-Body Atualizar exemplo:
-
-{
-    "id": 1,
-    "valorInicial": 1750,
-    "valorMensal": 200,
-    "dataInclusao": "2020-05-08",
-    "idTipoInvestimento": 1
-}
+PUT /transacao - atualizar uma transação.

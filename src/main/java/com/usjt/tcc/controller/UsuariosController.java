@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.usjt.tcc.model.Usuario;
+import com.usjt.tcc.model.entity.Usuario;
 import com.usjt.tcc.repository.Perfils;
 import com.usjt.tcc.repository.Usuarios;
 

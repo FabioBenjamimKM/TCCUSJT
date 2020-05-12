@@ -1,4 +1,4 @@
-package com.usjt.tcc.model;
+package com.usjt.tcc.model.entity;
 
 import java.io.Serializable;
 import java.sql.Date;
@@ -22,31 +22,25 @@ public class Investimento implements Serializable{
 	private long id;
 	
 	@Column(nullable = false)
-	private float valorInicial;
-	
-	@Column(nullable = false)
-	private float valorMensal;
-	
-	@Column(nullable = false)
-	private Date dataInclusao;
+	private String nome;
 	
 	@Column(nullable = false)
 	private Long idTipoInvestimento;
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
-	public Date getDataInclusao() {
-		return dataInclusao;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setDataInclusao(Date dataInclusao) {
-		this.dataInclusao = dataInclusao;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public Long getIdTipoInvestimento() {
@@ -55,21 +49,5 @@ public class Investimento implements Serializable{
 
 	public void setIdTipoInvestimento(Long idTipoInvestimento) {
 		this.idTipoInvestimento = idTipoInvestimento;
-	}
-
-	public float getValorInicial() {
-		return valorInicial;
-	}
-
-	public void setValorInicial(float valorInicial) {
-		this.valorInicial = valorInicial;
-	}
-
-	public float getValorMensal() {
-		return valorMensal;
-	}
-
-	public void setValorMensal(float valorMensal) {
-		this.valorMensal = valorMensal;
 	}
 }

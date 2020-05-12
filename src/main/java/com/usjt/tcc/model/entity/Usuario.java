@@ -1,4 +1,4 @@
-package com.usjt.tcc.model;
+package com.usjt.tcc.model.entity;
 
 import java.io.Serializable;
 

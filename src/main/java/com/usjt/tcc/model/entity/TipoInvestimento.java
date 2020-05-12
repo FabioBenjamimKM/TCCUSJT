@@ -1,4 +1,4 @@
-package com.usjt.tcc.model;
+package com.usjt.tcc.model.entity;
 
 import java.io.Serializable;
 
@@ -21,7 +21,7 @@ public class TipoInvestimento implements Serializable{
 	private long id;
 	
 	@Column(nullable = false)
-	private String descricao;
+	private String nome;
 
 	public Long getId() {
 		return id;
@@ -31,11 +31,11 @@ public class TipoInvestimento implements Serializable{
 		this.id = id;
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 }
