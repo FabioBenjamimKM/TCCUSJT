@@ -9,8 +9,8 @@ GET /api/transacao/{id} - obter uma transação de acordo com o id passado na ur
 
 GET /api/transacao/prever/{id}&{data} - prever valor da transação em uma data.
 
-DELETE /transacao - deletar uma transação.
+DELETE /api/transacao - deletar uma transação.
 
-POST /transacao - inserir uma transação.
+POST /api/transacao - inserir uma transação.
 
-PUT /transacao - atualizar uma transação.
+PUT /api/transacao - atualizar uma transação.
