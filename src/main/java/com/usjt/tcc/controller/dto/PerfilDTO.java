@@ -18,6 +18,7 @@ public class PerfilDTO {
 		this.idade = perfil.getIdade();
 		this.sexo = perfil.getSexo();
 		this.Estado = perfil.getEstado();
+		this.telefone = perfil.getTelefone();
 	}
 	
 	private Long id;
