@@ -20,18 +20,26 @@ public class Usuario implements Serializable{
 	private static final long serialVersionUID = 1;
 	
 	@Id
-	@Column(nullable = false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@Column(nullable = false, unique = true)
 	private String email;
 	
 	@Column(nullable = false)
 	private String senha;
 	
-	@Column(nullable = false)
-	private String cpf;
-	
 	@JoinColumn(unique = true)
 	@OneToOne
 	private Perfil perfil;
+	
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
 	
 	public Perfil getPerfil() {
 		return perfil;
@@ -39,14 +47,6 @@ public class Usuario implements Serializable{
 	
 	public void setPerfil(Perfil perfil) {
 		this.perfil = perfil;
-	}
-	
-	public String getCpf() {
-		return cpf;
-	}
-	
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
 	}
 	
 	public String getEmail() {
