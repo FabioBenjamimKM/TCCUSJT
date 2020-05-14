@@ -11,13 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-<<<<<<< Updated upstream
+
 import com.usjt.tcc.model.entity.Usuario;
-=======
 import com.usjt.tcc.dto.PerfilDTO;
-import com.usjt.tcc.model.Perfil;
-import com.usjt.tcc.model.Usuario;
->>>>>>> Stashed changes
+import com.usjt.tcc.model.entity.Perfil;
+import com.usjt.tcc.model.entity.Usuario;
 import com.usjt.tcc.repository.Perfils;
 import com.usjt.tcc.repository.Usuarios;
 

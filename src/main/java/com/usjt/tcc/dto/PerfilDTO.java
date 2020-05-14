@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 
-import com.usjt.tcc.model.Perfil;
+import com.usjt.tcc.model.entity.Perfil;
 
 public class PerfilDTO {
 	
