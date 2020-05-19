@@ -1,6 +1,7 @@
 package com.usjt.tcc.model.entity;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -21,7 +23,7 @@ public class Usuario implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long usuario_id;
 	
 	@Column(nullable = false, unique = true)
 	private String email;
@@ -29,18 +31,28 @@ public class Usuario implements Serializable{
 	@Column(nullable = false)
 	private String senha;
 	
-	@JoinColumn(unique = true)
-	@OneToOne
+	@OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
 	private Perfil perfil;
 	
-	public Long getId() {
-		return id;
-	}
+	@OneToMany(mappedBy="usuario")
+	private Set<Investimento> investimento;
 	
-	public void setId(Long id) {
-		this.id = id;
+	public Long getUsuario_id() {
+		return usuario_id;
 	}
-	
+
+	public void setUsuario_id(Long usuario_id) {
+		this.usuario_id = usuario_id;
+	}
+
+	public Set<Investimento> getInvestimento() {
+		return investimento;
+	}
+
+	public void setInvestimento(Set<Investimento> investimento) {
+		this.investimento = investimento;
+	}
+
 	public Perfil getPerfil() {
 		return perfil;
 	}
