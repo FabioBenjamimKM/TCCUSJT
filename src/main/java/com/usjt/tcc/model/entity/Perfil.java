@@ -44,10 +44,6 @@ public class Perfil implements Serializable{
 	@Column(nullable = false)
 	private String Estado;
 	
-	@OneToOne
-    @MapsId
-	private Usuario usuario;
-	
 	public String getCpf() {
 		return cpf;
 	}

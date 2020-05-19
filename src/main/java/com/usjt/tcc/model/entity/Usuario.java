@@ -31,7 +31,8 @@ public class Usuario implements Serializable{
 	@Column(nullable = false)
 	private String senha;
 	
-	@OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+	@JoinColumn(unique = true)
+	@OneToOne
 	private Perfil perfil;
 	
 	@OneToMany(mappedBy="usuario")
