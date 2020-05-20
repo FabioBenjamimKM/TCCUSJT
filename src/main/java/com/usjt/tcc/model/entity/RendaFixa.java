@@ -1,7 +1,6 @@
 package com.usjt.tcc.model.entity;
 
 import java.io.Serializable;
-import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,12 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="TB_TRANSACAO")
-public class Transacao implements Serializable{
+@Table(name="TB_RENDA_FIXA")
+public class RendaFixa implements Serializable{
 	
 	private static final long serialVersionUID = 1;
 	
@@ -25,13 +23,11 @@ public class Transacao implements Serializable{
 	private long id;
 	
 	@Column(nullable = false)
-	private float valor;
+	private float rendimentoFixo;
 	
-	@Column(nullable = false)
-	private Date data;
-	
-	@Column(nullable = false)
-	private Boolean resgatado;
+	@ManyToOne
+	@JoinColumn(name="id_rendimento_variavel")
+	private RendimentoVariavel rendimentoVariavel;
 	
 	@ManyToOne
 	@JoinColumn(name="id_investimento", nullable = false)
@@ -45,30 +41,22 @@ public class Transacao implements Serializable{
 		this.id = id;
 	}
 
-	public float getValor() {
-		return valor;
+	public float getRendimentoFixo() {
+		return rendimentoFixo;
 	}
 
-	public void setValor(float valor) {
-		this.valor = valor;
+	public void setRendimentoFixo(float rendimentoFixo) {
+		this.rendimentoFixo = rendimentoFixo;
 	}
 
-	public Date getData() {
-		return data;
+	public RendimentoVariavel getRendimentoVariavel() {
+		return rendimentoVariavel;
 	}
 
-	public void setData(Date data) {
-		this.data = data;
+	public void setRendimentoVariavel(RendimentoVariavel rendimentoVariavel) {
+		this.rendimentoVariavel = rendimentoVariavel;
 	}
 
-	public Boolean getResgatado() {
-		return resgatado;
-	}
-
-	public void setResgatado(Boolean resgatado) {
-		this.resgatado = resgatado;
-	}
-	
 	public Investimento getInvestimento() {
 		return investimento;
 	}

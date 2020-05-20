@@ -40,8 +40,8 @@ public class TransacaoService {
 	
 	public Previsao prever(long id, Date data) {
 		Transacao transacao = consultar(id);
-		ICalculadora calculadora = CalculadoraFactory.fabricar(transacao.getIdInvestimento());
+		ICalculadora calculadora = CalculadoraFactory.fabricar(transacao.getInvestimento().getId());
 		
-		return calculadora.prever(id, data);
+		return calculadora.prever(transacao, data);
 	}
 }
