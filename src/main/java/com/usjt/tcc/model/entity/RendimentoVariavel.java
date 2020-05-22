@@ -1,20 +1,17 @@
 package com.usjt.tcc.model.entity;
 
 import java.io.Serializable;
-import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="TB_INVESTIMENTO")
-public class Investimento implements Serializable{
+@Table(name="TB_RENDIMENTO_VARIAVEL")
+public class RendimentoVariavel implements Serializable{
 	
 	private static final long serialVersionUID = 1;
 	
@@ -25,10 +22,9 @@ public class Investimento implements Serializable{
 	
 	@Column(nullable = false)
 	private String nome;
-	
-	@ManyToOne
-	@JoinColumn(name="id_tipo_investimento", nullable = false)
-	private TipoInvestimento tipoInvestimento;
+
+	@Column(nullable = false)
+	private float valor;
 
 	public long getId() {
 		return id;
@@ -46,11 +42,11 @@ public class Investimento implements Serializable{
 		this.nome = nome;
 	}
 
-	public TipoInvestimento getTipoInvestimento() {
-		return tipoInvestimento;
+	public float getValor() {
+		return valor;
 	}
 
-	public void setTipoInvestimento(TipoInvestimento tipoInvestimento) {
-		this.tipoInvestimento = tipoInvestimento;
+	public void setValor(float valor) {
+		this.valor = valor;
 	}
 }

@@ -20,6 +20,9 @@ public class TransacaoService {
 	@Autowired
 	private TransacaoRepository _repository;
 	
+	@Autowired
+	private CalculadoraFactory _calculadoraFactory;
+	
 	public List<Transacao> consultar() {
 		return _repository.findAll();
 	}
@@ -40,8 +43,9 @@ public class TransacaoService {
 	
 	public Previsao prever(long id, Date data) {
 		Transacao transacao = consultar(id);
-		ICalculadora calculadora = CalculadoraFactory.fabricar(transacao.getIdInvestimento());
+		Investimento investimento = transacao.getInvestimento();
+		ICalculadora calculadora = _calculadoraFactory.fabricar(investimento.getTipoInvestimento().getId());
 		
-		return calculadora.prever(id, data);
+		return calculadora.prever(transacao, data);
 	}
 }

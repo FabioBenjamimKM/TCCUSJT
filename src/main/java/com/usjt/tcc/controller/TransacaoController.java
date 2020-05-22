@@ -1,5 +1,7 @@
 package com.usjt.tcc.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -38,7 +40,17 @@ public class TransacaoController {
 	}
 	
 	@GetMapping("/transacao/prever/{id}&{data}")
-	public Previsao prever(@PathVariable(value="id") long id, @PathVariable(value="data") Date data) {
+	public Previsao prever(@PathVariable(value="id") long id, @PathVariable(value="data") String dataString) {
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		Date data = null;
+		
+		try {
+			data = formatter.parse(dataString);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
 		return _service.prever(id, data);
 	}
 	
