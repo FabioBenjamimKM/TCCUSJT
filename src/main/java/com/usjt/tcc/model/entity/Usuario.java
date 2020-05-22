@@ -35,9 +35,6 @@ public class Usuario implements Serializable{
 	@OneToOne
 	private Perfil perfil;
 	
-	@OneToMany(mappedBy="usuario")
-	private Set<Investimento> investimento;
-	
 	public Long getUsuario_id() {
 		return usuario_id;
 	}
@@ -45,15 +42,7 @@ public class Usuario implements Serializable{
 	public void setUsuario_id(Long usuario_id) {
 		this.usuario_id = usuario_id;
 	}
-
-	public Set<Investimento> getInvestimento() {
-		return investimento;
-	}
-
-	public void setInvestimento(Set<Investimento> investimento) {
-		this.investimento = investimento;
-	}
-
+	
 	public Perfil getPerfil() {
 		return perfil;
 	}
