@@ -75,8 +75,13 @@ TABLE_NAMES = {
     'tipo_investimento': 'tb_tipo_investimento',
     'investimento': 'tb_investimento',
     'acao': 'tb_acao',
+    'dollar': 'tb_dolar_real',
 }
 
 TIPO_INVESTIMENTO = {
     'nome': 'RendaVariável'
+}
+
+USD_BRL = {
+    'nome': 'Paridade Dólar/Real'
 }

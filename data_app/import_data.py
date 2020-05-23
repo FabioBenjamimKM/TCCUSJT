@@ -5,7 +5,7 @@ from alpha_vantage.timeseries import TimeSeries
 import pandas as pd
 
 from conexao_mysql import MySQL
-from constants import TABLE_NAMES, TIPO_INVESTIMENTO, TICKERS as tk
+from constants import USD_BRL, TABLE_NAMES, TIPO_INVESTIMENTO, TICKERS as tk
 
 
 def main():
@@ -41,9 +41,9 @@ class Import:
             time.sleep(five_api_calls_per_minute)
 
         # FX
-        # self.create_df_fx()
-        # self.insert_entity_data('USD_BRL', 'Paridade Dólar/Real')
-        # self.insert_fx_data('Paridade Dólar/Real')
+        self.create_df_fx()
+        self.insert_entity_data('USD_BRL', USD_BRL['nome'])
+        self.insert_fx_data(USD_BRL['nome'])
 
         print('Data imported successfully!')
 
@@ -132,7 +132,7 @@ class Import:
         print(f'Inserting FX data')
         insert = f"""
                     INSERT INTO
-                        {TABLE_NAMES['acao']} (abertura, alta, baixa, fechamento, dia, ENTIDADE_id)
+                        {TABLE_NAMES['dollar']} (abertura, alta, baixa, fechamento, data, id_investimento)
                     VALUES
                         (%s, %s, %s, %s, %s, %s)
                 """
