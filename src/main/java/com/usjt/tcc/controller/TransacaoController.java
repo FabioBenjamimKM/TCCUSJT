@@ -2,10 +2,8 @@ package com.usjt.tcc.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,9 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.usjt.tcc.model.Lucro;
 import com.usjt.tcc.model.Previsao;
-import com.usjt.tcc.model.entity.Investimento;
+import com.usjt.tcc.model.Top;
 import com.usjt.tcc.model.entity.Transacao;
-import com.usjt.tcc.repository.TransacaoRepository;
 import com.usjt.tcc.service.TransacaoService;
 
 @RestController
@@ -64,6 +61,11 @@ public class TransacaoController {
 	@GetMapping("/transacoes/lucro/{idUsuario}")
 	public List<Lucro> calcularLucro(@PathVariable(value="idUsuario") long idUsuario) {
 		return _service.calcularLucro(idUsuario);
+	}
+	
+	@GetMapping("/transacoes/top/{idUsuario}&{quantidade}")
+	public List<Top> calcularTop(@PathVariable(value="idUsuario") long idUsuario, @PathVariable(value="quantidade") int quantidade) {
+		return _service.calcularTop(idUsuario, quantidade);
 	}
 	
 	@DeleteMapping("/transacao")
