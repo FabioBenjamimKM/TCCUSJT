@@ -1,5 +1,7 @@
 package com.usjt.tcc.service;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -7,9 +9,11 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.usjt.tcc.factory.CalculadoraFactory;
 import com.usjt.tcc.model.ICalculadora;
+import com.usjt.tcc.model.Lucro;
 import com.usjt.tcc.model.Previsao;
 import com.usjt.tcc.model.entity.Investimento;
 import com.usjt.tcc.model.entity.Transacao;
@@ -52,5 +56,24 @@ public class TransacaoService {
 		ICalculadora calculadora = _calculadoraFactory.fabricar(investimento.getTipoInvestimento().getId());
 		
 		return calculadora.prever(transacao, data);
+	}
+	
+	public List<Lucro> calcularLucro(long idUsuario) {
+		List<Transacao> transacoes = _repository.findAllByUsuarioId(idUsuario);
+		List<Lucro> lucroList = new ArrayList<Lucro>();
+		Date hoje = Calendar.getInstance().getTime();
+		
+		for (Transacao transacao : transacoes) {
+			Previsao previsao = prever(transacao.getId(), hoje);
+			float valorLucro = previsao.getValor() - transacao.getValor();
+			
+			Lucro lucro = new Lucro();
+			lucro.setInvestimento(transacao.getInvestimento());
+			lucro.setValor(valorLucro);
+			
+			lucroList.add(lucro);
+		}
+		
+		return lucroList;
 	}
 }

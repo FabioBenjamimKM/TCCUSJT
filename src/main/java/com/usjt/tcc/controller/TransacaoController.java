@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.usjt.tcc.model.Lucro;
 import com.usjt.tcc.model.Previsao;
 import com.usjt.tcc.model.entity.Investimento;
 import com.usjt.tcc.model.entity.Transacao;
@@ -58,6 +59,11 @@ public class TransacaoController {
 		}
 		
 		return _service.prever(id, data);
+	}
+	
+	@GetMapping("/transacoes/lucro/{idUsuario}")
+	public List<Lucro> calcularLucro(@PathVariable(value="idUsuario") long idUsuario) {
+		return _service.calcularLucro(idUsuario);
 	}
 	
 	@DeleteMapping("/transacao")
