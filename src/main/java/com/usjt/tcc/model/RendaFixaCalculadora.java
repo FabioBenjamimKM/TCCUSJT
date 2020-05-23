@@ -38,9 +38,7 @@ public class RendaFixaCalculadora implements ICalculadora {
 			RendaFixa rendaFixa = rendaFixaOptional.get();
 			
 			if(rendaFixa.getRendimentoVariavel() != null){
-				Optional<RendimentoVariavel> optional = _repositoryRendimentoVariavel.findById(rendaFixa.getId());
-				
-				rendimentoVariavel =  optional != null ? optional.get() : null;
+				rendimentoVariavel =  rendaFixa.getRendimentoVariavel();
 			}
 			
 			if(rendimentoVariavel != null){
