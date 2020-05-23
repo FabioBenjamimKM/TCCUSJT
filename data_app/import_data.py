@@ -5,7 +5,7 @@ from alpha_vantage.timeseries import TimeSeries
 import pandas as pd
 
 from conexao_mysql import MySQL
-from constants import TICKERS as tk
+from constants import TABLE_NAMES, TIPO_INVESTIMENTO, TICKERS as tk
 
 
 def main():
@@ -30,6 +30,8 @@ class Import:
     def run(self):
         five_api_calls_per_minute = 60 / 5
 
+        self.insert_entity_type()
+
         # Stock data
         for entity_symbol, entity_name in tk.items():
             self.entity = {'symbol': entity_symbol, 'name': entity_name}
@@ -39,9 +41,9 @@ class Import:
             time.sleep(five_api_calls_per_minute)
 
         # FX
-        self.create_df_fx()
-        self.insert_entity_data('USD_BRL', 'Paridade Dólar/Real')
-        self.insert_fx_data('USD_BRL')
+        # self.create_df_fx()
+        # self.insert_entity_data('USD_BRL', 'Paridade Dólar/Real')
+        # self.insert_fx_data('Paridade Dólar/Real')
 
         print('Data imported successfully!')
 
@@ -55,9 +57,26 @@ class Import:
             'adjusted_close', 'volume', 'dividend_amount', 'split_coefficient'
         ]
         self.df = data_df
+    
+    def get_entity_type_id(self, name):
+        query = f"""SELECT id FROM {TABLE_NAMES['tipo_investimento']} where {TABLE_NAMES['tipo_investimento']}.nome = '{name}'"""
+        entity_type = self.mysql_obj.execute_read_query(query)
+        if entity_type:
+            entity_type_id = entity_type[0][0]
+            return entity_type_id
+        return entity_type
+    
+    def insert_entity_type(self):
+        name = TIPO_INVESTIMENTO['nome']
+        print(f'Inserting entity type: {name}')
+        if self.get_entity_type_id(name):
+            print(f'Entity type {name} already exists')
+        else:
+            insert = f"""INSERT INTO {TABLE_NAMES['tipo_investimento']} (nome) VALUES ('{name}')"""
+            self.mysql_obj.execute_query(insert)
 
-    def get_entity_id(self, symbol):
-        query = """SELECT id FROM entidade where entidade.simbolo = '%s'""" % symbol
+    def get_entity_id(self, name):
+        query = f"""SELECT id FROM {TABLE_NAMES['investimento']} where {TABLE_NAMES['investimento']}.nome = '{name}'"""
         entity = self.mysql_obj.execute_read_query(query)
         if entity:
             entity = entity[0][0]
@@ -65,14 +84,17 @@ class Import:
 
     def insert_entity_data(self, symbol, name):
         print(f'Inserting entity: {name}')
-        if self.get_entity_id(symbol):
-            print(f'entity {name} already exists')
+        if self.get_entity_id(name):
+            print(f'Entity {name} already exists')
         else:
-            insert = """INSERT INTO entidade (nome, simbolo) VALUES ('%s', '%s')""" % (name, symbol)
+            entity_type_id = self.get_entity_type_id(TIPO_INVESTIMENTO['nome'])
+            if not entity_type_id:
+                raise ValueError
+            insert = f"""INSERT INTO {TABLE_NAMES['investimento']} (nome, id_tipo_investimento) VALUES ('{name}', {entity_type_id})"""
             self.mysql_obj.execute_query(insert)
 
     def get_stock_data_id(self, day, entity_id):
-        query = """SELECT id FROM valor WHERE valor.dia = '%s' and valor.ENTIDADE_id = '%s'""" % (day, entity_id)
+        query = f"""SELECT id FROM {TABLE_NAMES['acao']} WHERE {TABLE_NAMES['acao']}.data = '{day}' and {TABLE_NAMES['acao']}.id_investimento = '{entity_id}'"""
         stock_data = self.mysql_obj.execute_read_query(query)
         if stock_data:
             stock_data = stock_data[0][0]
@@ -80,17 +102,17 @@ class Import:
 
     def insert_stock_data(self):
         print(f'Inserting {self.entity["name"]} stock data')
-        insert = """
+        insert = f"""
             INSERT INTO
-                valor (
-                abertura, alta, baixa, fechamento, fechamento_ajustado, volume, dividendo, coeficiente_divisao, dia,
-                ENTIDADE_id
+                {TABLE_NAMES['acao']} (
+                abertura, alta, baixa, fechamento, fechamento_ajustado, volume, dividendo, coeficiente_divisao, data,
+                id_investimento
                 )
             VALUES
                 (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """
         df = self.df
-        entity_id = self.get_entity_id(self.entity['symbol'])
+        entity_id = self.get_entity_id(self.entity['name'])
         for day in df.itertuples():
             if not self.get_stock_data_id(day[0], entity_id):
                 self.mysql_obj.execute_par_query(insert, (day.open, day.high, day.low, day.close, day.adjusted_close,
@@ -106,16 +128,16 @@ class Import:
         data_df.columns = ['open', 'high', 'low', 'close']
         self.df = data_df
 
-    def insert_fx_data(self, symbol):
+    def insert_fx_data(self, name):
         print(f'Inserting FX data')
-        insert = """
+        insert = f"""
                     INSERT INTO
-                        valor (abertura, alta, baixa, fechamento, dia, ENTIDADE_id)
+                        {TABLE_NAMES['acao']} (abertura, alta, baixa, fechamento, dia, ENTIDADE_id)
                     VALUES
                         (%s, %s, %s, %s, %s, %s)
                 """
         df = self.df
-        entity_id = self.get_entity_id(symbol)
+        entity_id = self.get_entity_id(name)
         for day in df.itertuples():
             if not self.get_stock_data_id(day[0], entity_id):
                 self.mysql_obj.execute_par_query(insert, (day.open, day.high, day.low, day.close, day[0], entity_id))

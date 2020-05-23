@@ -70,3 +70,13 @@ TICKERS = {
     'WEGZY': 'WEG',
     'XP': 'Xp Inc',
 }
+
+TABLE_NAMES = {
+    'tipo_investimento': 'tb_tipo_investimento',
+    'investimento': 'tb_investimento',
+    'acao': 'tb_acao',
+}
+
+TIPO_INVESTIMENTO = {
+    'nome': 'RendaVariável'
+}
