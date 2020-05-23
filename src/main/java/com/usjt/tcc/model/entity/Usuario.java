@@ -23,7 +23,7 @@ public class Usuario implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long usuario_id;
+	private Long id;
 	
 	@Column(nullable = false, unique = true)
 	private String email;
@@ -35,14 +35,14 @@ public class Usuario implements Serializable{
 	@OneToOne
 	private Perfil perfil;
 	
-	public Long getUsuario_id() {
-		return usuario_id;
+	public Long getId() {
+		return id;
 	}
 
-	public void setUsuario_id(Long usuario_id) {
-		this.usuario_id = usuario_id;
+	public void setId(Long id) {
+		this.id = id;
 	}
-	
+
 	public Perfil getPerfil() {
 		return perfil;
 	}

@@ -30,8 +30,9 @@ public class Transacao implements Serializable{
 	@Column(nullable = false)
 	private Date data;
 	
-	@Column(nullable = false)
-	private Boolean resgatado;
+	@ManyToOne
+	@JoinColumn(name="id_resgate")
+	private Resgate resgate;
 	
 	@ManyToOne
 	@JoinColumn(name="id_investimento", nullable = false)
@@ -65,12 +66,12 @@ public class Transacao implements Serializable{
 		this.data = data;
 	}
 
-	public Boolean getResgatado() {
-		return resgatado;
+	public Resgate getResgate() {
+		return resgate;
 	}
 
-	public void setResgatado(Boolean resgatado) {
-		this.resgatado = resgatado;
+	public void setResgate(Resgate resgate) {
+		this.resgate = resgate;
 	}
 	
 	public Investimento getInvestimento() {

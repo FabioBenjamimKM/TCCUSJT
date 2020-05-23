@@ -1,5 +1,6 @@
 package com.usjt.tcc.service;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +26,10 @@ public class TransacaoService {
 	
 	public List<Transacao> consultar() {
 		return _repository.findAll();
+	}
+	
+	public List<Transacao> consultarPorUsuarioId(long usuarioId) {
+		return _repository.findAllByUsuarioId(usuarioId);
 	}
 	
 	public Transacao consultar(long transacaoId) {

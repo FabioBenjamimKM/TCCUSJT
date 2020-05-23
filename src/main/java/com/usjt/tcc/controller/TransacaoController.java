@@ -2,6 +2,7 @@ package com.usjt.tcc.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -32,6 +33,11 @@ public class TransacaoController {
 	@GetMapping("/transacoes")
 	public List<Transacao> consultar() {
 		return _service.consultar();
+	}
+	
+	@GetMapping("/transacoes/usuario/{id}")
+	public List<Transacao> consultarPorUsuarioId(@PathVariable(value="id") long id) {
+		return _service.consultarPorUsuarioId(id);
 	}
 	
 	@GetMapping("/transacao/{id}")
