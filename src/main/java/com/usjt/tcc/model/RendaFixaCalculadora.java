@@ -31,16 +31,14 @@ public class RendaFixaCalculadora implements ICalculadora {
 		previsao.setData(data);
 		
 		long idInvestimento = transacao.getInvestimento().getId();
-		Optional<RendaFixa> rendaFixaOptional = _repositoryRendaFixa.findFirstByInvestimentoId(idInvestimento);
+		Optional<RendaFixa> rendaFixaOptional = _repositoryRendaFixa.findFirstByInvestimentoIdAndData(idInvestimento, transacao.getData());
 		RendimentoVariavel rendimentoVariavel = null;
 		
 		if(rendaFixaOptional != null) {
 			RendaFixa rendaFixa = rendaFixaOptional.get();
 			
 			if(rendaFixa.getRendimentoVariavel() != null){
-				Optional<RendimentoVariavel> optional = _repositoryRendimentoVariavel.findById(rendaFixa.getId());
-				
-				rendimentoVariavel =  optional != null ? optional.get() : null;
+				rendimentoVariavel =  rendaFixa.getRendimentoVariavel();
 			}
 			
 			if(rendimentoVariavel != null){

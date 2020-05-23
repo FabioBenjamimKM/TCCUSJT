@@ -1,6 +1,7 @@
 package com.usjt.tcc.model.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,6 +25,12 @@ public class RendaFixa implements Serializable{
 	
 	@Column(nullable = false)
 	private float rendimentoFixo;
+	
+	@Column(nullable = false)
+	private Date dataVencimento;
+	
+	@Column(nullable = false)
+	private Date data;
 	
 	@ManyToOne
 	@JoinColumn(name="id_rendimento_variavel")
@@ -49,6 +56,22 @@ public class RendaFixa implements Serializable{
 		this.rendimentoFixo = rendimentoFixo;
 	}
 
+	public Date getDataVencimento() {
+		return dataVencimento;
+	}
+
+	public void setDataVencimento(Date dataVencimento) {
+		this.dataVencimento = dataVencimento;
+	}
+
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
+	}
+
 	public RendimentoVariavel getRendimentoVariavel() {
 		return rendimentoVariavel;
 	}
@@ -64,4 +87,5 @@ public class RendaFixa implements Serializable{
 	public void setInvestimento(Investimento investimento) {
 		this.investimento = investimento;
 	}
+	
 }
