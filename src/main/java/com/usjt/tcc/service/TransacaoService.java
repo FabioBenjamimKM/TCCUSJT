@@ -54,7 +54,7 @@ public class TransacaoService {
 		_repository.delete(transacao);
 	}
 	
-	public Previsao prever(long id, Date data) {
+	public Previsao prever(long id, Date data) throws Exception {
 		Transacao transacao = consultar(id);
 		Investimento investimento = transacao.getInvestimento();
 		ICalculadora calculadora = _calculadoraFactory.fabricar(investimento.getTipoInvestimento().getId());
@@ -62,7 +62,7 @@ public class TransacaoService {
 		return calculadora.prever(transacao, data);
 	}
 	
-	public List<Lucro> calcularLucro(long idUsuario) {
+	public List<Lucro> calcularLucro(long idUsuario) throws Exception {
 		List<Transacao> transacoes = _repository.findAllByUsuarioId(idUsuario);
 		List<Lucro> lucroList = new ArrayList<Lucro>();
 		Date hoje = Calendar.getInstance().getTime();
@@ -81,7 +81,7 @@ public class TransacaoService {
 		return lucroList;
 	}
 	
-	public List<Top> calcularTop(long idUsuario, int quantidade){
+	public List<Top> calcularTop(long idUsuario, int quantidade) throws Exception{
 		List<Transacao> transacoes = _repository.findAllByUsuarioId(idUsuario);
 		List<Top> topAuxList = new ArrayList<Top>();
 		List<Top> topList = new ArrayList<Top>();

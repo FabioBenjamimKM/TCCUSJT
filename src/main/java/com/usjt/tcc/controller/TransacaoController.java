@@ -37,6 +37,16 @@ public class TransacaoController {
 	public List<Transacao> consultarPorUsuarioId(@PathVariable(value="id") long id) {
 		return _service.consultarPorUsuarioId(id);
 	}
+
+	@GetMapping("/transacoes/lucro/{idUsuario}")
+	public List<Lucro> calcularLucro(@PathVariable(value="idUsuario") long idUsuario) throws Exception {
+		return _service.calcularLucro(idUsuario);
+	}
+	
+	@GetMapping("/transacoes/top/{idUsuario}&{quantidade}")
+	public List<Top> calcularTop(@PathVariable(value="idUsuario") long idUsuario, @PathVariable(value="quantidade") int quantidade) throws Exception {
+		return _service.calcularTop(idUsuario, quantidade);
+	}
 	
 	@GetMapping("/transacao/{id}")
 	public Transacao consultar(@PathVariable(value="id") long id) {
@@ -44,7 +54,7 @@ public class TransacaoController {
 	}
 	
 	@GetMapping("/transacao/prever/{id}&{data}")
-	public Previsao prever(@PathVariable(value="id") long id, @PathVariable(value="data") String dataString) {
+	public Previsao prever(@PathVariable(value="id") long id, @PathVariable(value="data") String dataString) throws Exception {
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 		Date data = null;
@@ -56,16 +66,6 @@ public class TransacaoController {
 		}
 		
 		return _service.prever(id, data);
-	}
-	
-	@GetMapping("/transacoes/lucro/{idUsuario}")
-	public List<Lucro> calcularLucro(@PathVariable(value="idUsuario") long idUsuario) {
-		return _service.calcularLucro(idUsuario);
-	}
-	
-	@GetMapping("/transacoes/top/{idUsuario}&{quantidade}")
-	public List<Top> calcularTop(@PathVariable(value="idUsuario") long idUsuario, @PathVariable(value="quantidade") int quantidade) {
-		return _service.calcularTop(idUsuario, quantidade);
 	}
 	
 	@DeleteMapping("/transacao")
