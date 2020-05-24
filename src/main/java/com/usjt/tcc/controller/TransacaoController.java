@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.usjt.tcc.model.Lucro;
 import com.usjt.tcc.model.Previsao;
-import com.usjt.tcc.model.entity.Investimento;
+import com.usjt.tcc.model.Top;
 import com.usjt.tcc.model.entity.Transacao;
-import com.usjt.tcc.repository.TransacaoRepository;
 import com.usjt.tcc.service.TransacaoService;
 
 @RestController
@@ -34,13 +33,28 @@ public class TransacaoController {
 		return _service.consultar();
 	}
 	
+	@GetMapping("/transacoes/usuario/{id}")
+	public List<Transacao> consultarPorUsuarioId(@PathVariable(value="id") long id) {
+		return _service.consultarPorUsuarioId(id);
+	}
+
+	@GetMapping("/transacoes/lucro/{idUsuario}")
+	public List<Lucro> calcularLucro(@PathVariable(value="idUsuario") long idUsuario) throws Exception {
+		return _service.calcularLucro(idUsuario);
+	}
+	
+	@GetMapping("/transacoes/top/{idUsuario}&{quantidade}")
+	public List<Top> calcularTop(@PathVariable(value="idUsuario") long idUsuario, @PathVariable(value="quantidade") int quantidade) throws Exception {
+		return _service.calcularTop(idUsuario, quantidade);
+	}
+	
 	@GetMapping("/transacao/{id}")
 	public Transacao consultar(@PathVariable(value="id") long id) {
 		return _service.consultar(id);
 	}
 	
 	@GetMapping("/transacao/prever/{id}&{data}")
-	public Previsao prever(@PathVariable(value="id") long id, @PathVariable(value="data") String dataString) {
+	public Previsao prever(@PathVariable(value="id") long id, @PathVariable(value="data") String dataString) throws Exception {
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 		Date data = null;

@@ -6,10 +6,9 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.usjt.tcc.model.entity.RendaFixa;
+import com.usjt.tcc.model.entity.DolarReal;
 
 @Repository
-public interface RendaFixaRepository extends JpaRepository<RendaFixa, Long>{
-	
-	Optional<RendaFixa> findFirstByInvestimentoIdAndData(long id, Date data);
+public interface DolarRealRepository extends JpaRepository<DolarReal, Long>{
+	Optional<DolarReal> findFirstByData(Date data);
 }
