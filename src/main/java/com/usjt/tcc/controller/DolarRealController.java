@@ -3,6 +3,7 @@ package com.usjt.tcc.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,18 +21,8 @@ public class DolarRealController {
 	@Autowired
 	private DolarRealService _service;
 	
-	@GetMapping("/dolar/{data}")
-	public DolarReal consultar(@PathVariable(value="data") String dataString) {
-		
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-		Date data = null;
-		
-		try {
-			data = formatter.parse(dataString);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		
-		return _service.consultar(data);
+	@GetMapping("/dolar")
+	public List<DolarReal> consultar() {
+		return _service.consultar();
 	}
 }
