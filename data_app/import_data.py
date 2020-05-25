@@ -1,4 +1,5 @@
 from mysql_conn import MySQL
+from scripts.ipca import IPCAImport
 from scripts.stock import StockImport
 from scripts.forex import ForexImport
 from scripts.tesouro_direto import TesouroDiretoImport
@@ -6,6 +7,7 @@ from scripts.tesouro_direto import TesouroDiretoImport
 
 def main():
     mysql_obj, api_key = setup()
+    IPCAImport(mysql_obj).run()
     TesouroDiretoImport(mysql_obj).run()
     ForexImport(mysql_obj, api_key).run()
     StockImport(mysql_obj, api_key).run()
