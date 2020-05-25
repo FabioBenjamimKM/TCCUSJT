@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.usjt.tcc.model.Sugestao;
 import com.usjt.tcc.model.entity.Acao;
 import com.usjt.tcc.service.AcaoService;
 
@@ -19,12 +20,12 @@ public class AcaoController {
 	private AcaoService _service;
 	
 	@GetMapping("/acoes/crescimento/{quantidade}")
-	public List<Acao> consultarPorCrescimento(@PathVariable(value="quantidade") int quantidade) {
+	public List<Sugestao> consultarPorCrescimento(@PathVariable(value="quantidade") int quantidade) {
 		return _service.consultarPorCrescimento(quantidade);
 	}
 	
 	@GetMapping("/acoes/regularidade/{quantidade}")
-	public List<Acao> consultarPorRegularidade(@PathVariable(value="quantidade") int quantidade) {
+	public List<Sugestao> consultarPorRegularidade(@PathVariable(value="quantidade") int quantidade) {
 		return _service.consultarPorRegularidade(quantidade);
 	}
 }
