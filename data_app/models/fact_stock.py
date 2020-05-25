@@ -16,9 +16,9 @@ class FactStock:
         FROM
             {self.table_name}
         WHERE
-            {self.table_name}.tb_investimento_id = {investment_id}
+            {self.table_name}.id_investimento = {investment_id}
         AND
-            {self.table_name}.dim_tempo_id = {dim_time_id}
+            {self.table_name}.id_tempo = {dim_time_id}
         """
         return self.mysql_obj.execute_read_query(query)
 
@@ -26,7 +26,7 @@ class FactStock:
         if not self.get_growth(investment_id, dim_time_id):
             insert = f"""
                 INSERT INTO
-                    {self.table_name} (tb_investimento_id, dim_tempo_id, crescimento, crescimento_porcentagem)
+                    {self.table_name} (id_investimento, id_tempo, crescimento, crescimento_porcentagem)
                 VALUES
                     ({investment_id}, {dim_time_id}, {growth}, {growth_percentage})
             """

@@ -31,13 +31,11 @@ build/
 ### VS Code ###
 .vscode/
 
-### Python ###
+### Python Env ###
 data_app/venv
 local_settings.py
-__pycache__/
 
 ### API Key ###
 data_app/.api_key
-
-### Java ###
-application.properties
+src/main/resources/application.properties
+src/main/resources/application.properties
