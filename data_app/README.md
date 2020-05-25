@@ -8,6 +8,11 @@
 para o selenium utilizar
 5. Adicione o driver ao seu PATH
 6. Pegar sua [key](https://www.alphavantage.co/support/#api-key) na Alpha Vantage
-7. Criar um arquivo chamado *".api_key"*
-8. Adicionar sua chave nesse arquivo, assim como está em *".api_key_example"*
-9. Rodar a importação: ```$ python import_data.py```
+7. Rodar a importação: ```$ python import_data.py```
+
+### Opcional
+
+Adicionar arquivo **local_settings.py** com os dados, assim como em **local_settings_example.py**
+
+Dessa maneira não vai ser necessário colocar as informações no input a cada importação
+
