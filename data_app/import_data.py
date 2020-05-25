@@ -6,6 +6,11 @@ from scripts.stock import StockImport
 from scripts.forex import ForexImport
 from scripts.tesouro_direto import TesouroDiretoImport
 
+try:
+    from local_settings import API_KEY, DB_USER, DB_PASSWORD
+except ImportError:
+    API_KEY, DB_USER, DB_PASSWORD = ['', '', '']
+
 
 def main():
     mysql_obj, api_key = setup()
@@ -23,11 +28,19 @@ def main():
 
 
 def setup():
-    mysql_user = input('Insert your MySQL username\n')
-    mysql_password = input('Insert your MySQL password\n')
+    if not DB_USER:
+        mysql_user = input('Insert your MySQL username\n')
+    else:
+        mysql_user = DB_USER
+    if not DB_PASSWORD:
+        mysql_password = input('Insert your MySQL password\n')
+    else:
+        mysql_password = DB_PASSWORD
     mysql_obj = MySQL('localhost', mysql_user, mysql_password, 'sistema_investimento')
-    with open('.api_key') as f:
-        api_key = f.readline().strip()
+    if not API_KEY:
+        api_key = input('Insert your API key\n')
+    else:
+        api_key = API_KEY
     return mysql_obj, api_key
 
 

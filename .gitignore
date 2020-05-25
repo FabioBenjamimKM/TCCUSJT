@@ -33,6 +33,7 @@ build/
 
 ### Python Env ###
 data_app/venv
+local_settings.py
 
 ### API Key ###
 data_app/.api_key
