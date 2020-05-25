@@ -79,6 +79,8 @@ TABLE_NAMES = {
     'income_variable_type': 'tb_tipo_rendimento_variavel',
     'income_variable': 'tb_rendimento_variavel',
     'fixed_income': 'tb_renda_fixa',
+    'fact_stock': 'fato_acao',
+    'dim_time': 'dim_tempo',
 }
 
 USD_BRL_NAME = 'Paridade Dólar/Real'

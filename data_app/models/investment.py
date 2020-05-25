@@ -27,3 +27,7 @@ class Investment:
             investment_id = investment[0][0]
             return investment_id
         return None
+
+    def get_all_by_ids(self, ids_tuple):
+        query = f"""SELECT id, nome FROM {self.table_name} WHERE id IN {ids_tuple}"""
+        return self.mysql_obj.execute_read_query(query)
