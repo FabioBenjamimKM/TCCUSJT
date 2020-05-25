@@ -38,3 +38,6 @@ __pycache__/
 
 ### API Key ###
 data_app/.api_key
+
+### Java ###
+application.properties
