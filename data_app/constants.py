@@ -25,7 +25,6 @@ TICKERS = {
     'CZZ': 'Cosan Ltd',
     'SID': 'Companhia Siderurgica Nacional-CSN',
     'CPL': 'CPFL Energia',
-    'CREIY': 'CR2 Empreendimentos Imobiliarios SA',
     'CTPTY': 'CTEEP Companhia de Transmissao de Energia Eletrica Paulista',
     'CYRBY': 'Cyrela Brazil Realty',
     'CYRLY': 'Cyrela Commercial Properties SA Empreendimentos e Participacoes',
