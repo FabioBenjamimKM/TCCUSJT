@@ -31,9 +31,10 @@ build/
 ### VS Code ###
 .vscode/
 
-### Python Env ###
+### Python ###
 data_app/venv
 local_settings.py
+__pycache__/
 
 ### API Key ###
 data_app/.api_key
