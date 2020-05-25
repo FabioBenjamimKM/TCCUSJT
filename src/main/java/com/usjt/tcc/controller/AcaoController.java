@@ -1,5 +1,8 @@
 package com.usjt.tcc.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +30,20 @@ public class AcaoController {
 	@GetMapping("/acoes/regularidade/{quantidade}")
 	public List<Sugestao> consultarPorRegularidade(@PathVariable(value="quantidade") int quantidade) {
 		return _service.consultarPorRegularidade(quantidade);
+	}
+	
+	@GetMapping("/acoes/{data}")
+	public List<Acao> consultar(@PathVariable(value="data") String dataString){
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		Date data = null;
+		
+		try {
+			data = formatter.parse(dataString);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		return _service.consultar(data);
 	}
 }

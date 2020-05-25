@@ -1,6 +1,7 @@
 package com.usjt.tcc.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +61,9 @@ public class AcaoService {
 		sugestaoList.add(sugestao);
 		
 		return sugestaoList;
+	}
+	
+	public List<Acao> consultar(Date data){
+		return _repository.findByData(data);
 	}
 }
