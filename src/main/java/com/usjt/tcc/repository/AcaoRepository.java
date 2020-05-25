@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.usjt.tcc.model.entity.Acao;
@@ -11,4 +13,7 @@ import com.usjt.tcc.model.entity.Acao;
 @Repository
 public interface AcaoRepository extends JpaRepository<Acao, Long>{
 	List<Acao> findByData(Date data);
+
+	@Query(nativeQuery = true, value = "select * from tb_acao where data LIKE '2020-05%' and id_investimento = :number")
+	List<Acao> findByTopSugestao(@Param("number")Integer number);
 }

@@ -46,4 +46,9 @@ public class AcaoController {
 		
 		return _service.consultar(data);
 	}
+	
+	@GetMapping("/acoes/sugestao/{number}")
+	public List<Acao> sugestao(@PathVariable(value="number") Integer number){
+		return _service.sugestao(number);
+	}
 }

@@ -66,4 +66,8 @@ public class AcaoService {
 	public List<Acao> consultar(Date data){
 		return _repository.findByData(data);
 	}
+	
+	public List<Acao> sugestao(Integer number){
+		return _repository.findByTopSugestao(number);
+	}
 }
