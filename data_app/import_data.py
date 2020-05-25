@@ -67,7 +67,7 @@ class Import:
         return entity_type
     
     def insert_entity_type(self):
-        name = TIPO_INVESTIMENTO['nome']
+        name = TIPO_INVESTIMENTO['renda_variavel']
         print(f'Inserting entity type: {name}')
         if self.get_entity_type_id(name):
             print(f'Entity type {name} already exists')
@@ -87,7 +87,7 @@ class Import:
         if self.get_entity_id(name):
             print(f'Entity {name} already exists')
         else:
-            entity_type_id = self.get_entity_type_id(TIPO_INVESTIMENTO['nome'])
+            entity_type_id = self.get_entity_type_id(TIPO_INVESTIMENTO['renda_variavel'])
             if not entity_type_id:
                 raise ValueError
             insert = f"""INSERT INTO {TABLE_NAMES['investimento']} (nome, id_tipo_investimento) VALUES ('{name}', {entity_type_id})"""

@@ -72,14 +72,13 @@ TICKERS = {
 }
 
 TABLE_NAMES = {
-    'tipo_investimento': 'tb_tipo_investimento',
-    'investimento': 'tb_investimento',
+    'investment_type': 'tb_tipo_investimento',
+    'investment': 'tb_investimento',
     'acao': 'tb_acao',
     'dollar': 'tb_dolar_real',
-}
-
-TIPO_INVESTIMENTO = {
-    'nome': 'RendaVariável'
+    'income_variable_type': 'tb_tipo_rendimento_variavel',
+    'income_variable': 'tb_rendimento_variavel',
+    'fixed_income': 'tb_renda_fixa',
 }
 
 USD_BRL = {
