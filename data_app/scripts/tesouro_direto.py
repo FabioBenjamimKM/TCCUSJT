@@ -3,7 +3,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from datetime import datetime
 
-from conexao_mysql import MySQL
+from constants import INVESTMENT_TYPE
 from models.fixed_income import FixedIncome
 from models.variable_income import VariableIncome
 from models.variable_income_type import VariableIncomeType
@@ -27,7 +27,7 @@ TITULO_PUBLICO_KEYS = {
 }
 
 
-class TesouroDireto:
+class TesouroDiretoImport:
     titulos_publicos = {
         'invest': [],
         'redeem': [],
@@ -42,7 +42,7 @@ class TesouroDireto:
     def __init__(self, mysql_obj):
         self.mysql_obj = mysql_obj
 
-    def run_import(self):
+    def run(self):
         print('Importing Tesouro Direto')
         self.search_data()
         self.parse_data()
@@ -169,12 +169,13 @@ class TesouroDireto:
         self.insert_fixed_income()
 
     def insert_investment_type(self):
+        name = INVESTMENT_TYPE['fixed_income']
         investment_type = InvestmentType(self.mysql_obj)
-        investment_type.insert()
+        investment_type.insert(name)
 
     def insert_investment(self):
         investment_type = InvestmentType(self.mysql_obj)
-        investment_type_id = investment_type.get_id()
+        investment_type_id = investment_type.get_id(INVESTMENT_TYPE['fixed_income'])
         investment = Investment(self.mysql_obj)
 
         invest_df = self.titulos_publicos_dfs['invest']['title']
@@ -208,10 +209,3 @@ class TesouroDireto:
         redeem_df = self.titulos_publicos_dfs['redeem']
         fixed_income.insert_multiple(invest_df)
         fixed_income.insert_multiple(redeem_df)
-
-
-mysql_user = 'alunos'
-mysql_password = 'alunos'
-mysql_object = MySQL('localhost', mysql_user, mysql_password, 'sistema_investimento')
-TesouroDireto(mysql_object).run_import()
-mysql_object.connection.close()

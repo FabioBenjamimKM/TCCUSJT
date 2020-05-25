@@ -74,13 +74,21 @@ TICKERS = {
 TABLE_NAMES = {
     'investment_type': 'tb_tipo_investimento',
     'investment': 'tb_investimento',
-    'acao': 'tb_acao',
+    'stock': 'tb_acao',
     'dollar': 'tb_dolar_real',
     'income_variable_type': 'tb_tipo_rendimento_variavel',
     'income_variable': 'tb_rendimento_variavel',
     'fixed_income': 'tb_renda_fixa',
 }
 
-USD_BRL = {
-    'nome': 'Paridade Dólar/Real'
+USD_BRL_NAME = 'Paridade Dólar/Real'
+
+INVESTMENT_TYPE = {
+    'fixed_income': 'Renda Fixa',
+    'variable_income': 'Renda Variável'
+}
+
+EXCHANGE_RATE_SYMBOLS = {
+    'from_symbol': 'USD',
+    'to_symbol': 'BRL'
 }

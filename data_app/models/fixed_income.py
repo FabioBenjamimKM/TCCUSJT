@@ -63,6 +63,8 @@ class FixedIncome:
             investment_id = investment.get_id(titulo_publico.title)
             if len(titulo_publico.annual_profitability) > 1:
                 variable_income_id = variable_income.get_id_by_name(titulo_publico.annual_profitability[1])
+                if not variable_income_id:
+                    raise ValueError('TB_RENDIMENTO_VARIAVEL não encontrada, insira os valores')
                 self.insert(
                     today,
                     titulo_publico.due_date,
