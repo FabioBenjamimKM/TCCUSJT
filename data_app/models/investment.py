@@ -34,6 +34,6 @@ class Investment:
             if not ids_str:
                 ids_str += f'{str(id_investment)}'
             else:
-                ids_str = f', {str(id_investment)}'
+                ids_str += f', {str(id_investment)}'
         query = f"""SELECT id, nome FROM {self.table_name} WHERE id IN ({ids_str})"""
         return self.mysql_obj.execute_read_query(query)
