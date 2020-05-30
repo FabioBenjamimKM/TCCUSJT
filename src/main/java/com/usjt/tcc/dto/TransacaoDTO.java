@@ -1,48 +1,58 @@
-package com.usjt.tcc.model.entity;
+package com.usjt.tcc.dto;
 
-import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
-import com.usjt.tcc.dto.TransacaoDTO;
+import com.usjt.tcc.model.entity.Investimento;
+import com.usjt.tcc.model.entity.RendaFixa;
+import com.usjt.tcc.model.entity.Resgate;
+import com.usjt.tcc.model.entity.Usuario;
+import com.usjt.tcc.service.RendaFixaService;
 
-@Entity
-@Table(name="TB_TRANSACAO")
-public class Transacao implements Serializable{
+public class TransacaoDTO {
 	
 	private static final long serialVersionUID = 1;
 	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(nullable = false)
+	private RendaFixaService rendaFixaService = new RendaFixaService();
+
+	public TransacaoDTO(long id, float valor, Date data, Investimento investimento, Usuario usuario, Date dataVencimento) {
+		this.id = id;
+		this.valor = valor;
+		this.data = data;
+		this.investimento = investimento;
+		this.usuario = usuario;
+		this.dataVencimento = dataVencimento;			
+		
+		
+	}
+	
 	private long id;
 	
-	@Column(nullable = false)
 	private float valor;
 	
-	@Column(nullable = false)
 	private Date data;
 	
-	@ManyToOne
-	@JoinColumn(name="id_resgate")
 	private Resgate resgate;
-	
-	@ManyToOne
-	@JoinColumn(name="id_investimento", nullable = false)
+
 	private Investimento investimento;
-	
-	@ManyToOne
-    @JoinColumn(name="usuario_id", nullable=false)
+
     private Usuario usuario;
+    
+    private Date dataVencimento;
+    
+    public Date getDataVencimento() {
+		return dataVencimento;
+	}
+    
+    public void setDataVencimento(Date dataVencimento) {
+		this.dataVencimento = dataVencimento;
+	}
 
 	public long getId() {
 		return id;
@@ -75,7 +85,7 @@ public class Transacao implements Serializable{
 	public void setResgate(Resgate resgate) {
 		this.resgate = resgate;
 	}
-	
+
 	public Investimento getInvestimento() {
 		return investimento;
 	}
@@ -91,8 +101,9 @@ public class Transacao implements Serializable{
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
-	public TransacaoDTO converter(java.util.Date date) {
-		return new TransacaoDTO(this.id, this.valor, this.data, this.investimento, this.usuario, date);
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
+
 }
