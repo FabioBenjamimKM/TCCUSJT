@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.usjt.tcc.dto.TransacaoDTO;
 import com.usjt.tcc.model.Lucro;
 import com.usjt.tcc.model.Previsao;
 import com.usjt.tcc.model.Top;
@@ -34,7 +35,7 @@ public class TransacaoController {
 	}
 	
 	@GetMapping("/transacoes/usuario/{id}")
-	public List<Transacao> consultarPorUsuarioId(@PathVariable(value="id") long id) {
+	public List<TransacaoDTO> consultarPorUsuarioId(@PathVariable(value="id") long id) {
 		return _service.consultarPorUsuarioId(id);
 	}
 

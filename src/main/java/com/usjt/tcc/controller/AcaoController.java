@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.usjt.tcc.model.Lucro;
 import com.usjt.tcc.model.Sugestao;
 import com.usjt.tcc.model.entity.Acao;
 import com.usjt.tcc.service.AcaoService;
@@ -50,5 +52,10 @@ public class AcaoController {
 	@GetMapping("/acoes/sugestao/{number}")
 	public List<Acao> sugestao(@PathVariable(value="number") Integer number){
 		return _service.sugestao(number);
+	}
+	
+	@GetMapping("/acoes/sugestao/{idUsuario}")
+	public List<Acao> consultarRentavel(@PathVariable(value="idUsuario") long idUsuario) throws Exception {
+		return _service.consultarRentavel(idUsuario);
 	}
 }

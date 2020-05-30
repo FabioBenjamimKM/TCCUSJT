@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.usjt.tcc.dto.TransacaoDTO;
 import com.usjt.tcc.factory.CalculadoraFactory;
 import com.usjt.tcc.model.ComparadorTop;
 import com.usjt.tcc.model.ICalculadora;
@@ -20,7 +21,10 @@ import com.usjt.tcc.model.Lucro;
 import com.usjt.tcc.model.Previsao;
 import com.usjt.tcc.model.Top;
 import com.usjt.tcc.model.entity.Investimento;
+import com.usjt.tcc.model.entity.RendaFixa;
 import com.usjt.tcc.model.entity.Transacao;
+import com.usjt.tcc.repository.InvestimentoRepository;
+import com.usjt.tcc.repository.RendaFixaRepository;
 import com.usjt.tcc.repository.TransacaoRepository;
 
 @Service
@@ -32,12 +36,25 @@ public class TransacaoService {
 	@Autowired
 	private CalculadoraFactory _calculadoraFactory;
 	
+	@Autowired
+	private RendaFixaRepository _rendaRepository;
+	
 	public List<Transacao> consultar() {
 		return _repository.findAll();
 	}
 	
-	public List<Transacao> consultarPorUsuarioId(long usuarioId) {
-		return _repository.findAllByUsuarioId(usuarioId);
+	public List<TransacaoDTO> consultarPorUsuarioId(long usuarioId) {
+		List<Transacao> list = _repository.findAllByUsuarioId(usuarioId);
+		List<TransacaoDTO> listDTO = new ArrayList<TransacaoDTO>();
+		for (Transacao transacao : list) {
+			if(transacao.getInvestimento().getTipoInvestimento().getId() == 1) {
+				List<RendaFixa> xs = _rendaRepository.findDataVencimento(transacao.getInvestimento().getId());
+				listDTO.add(transacao.converter(xs.get(0).getDataVencimento()));				
+			} else {
+				listDTO.add(transacao.converter(null));
+			}
+		}
+		return listDTO;
 	}
 	
 	public Transacao consultar(long transacaoId) {
@@ -100,6 +117,31 @@ public class TransacaoService {
 		Collections.sort(topAuxList, new ComparadorTop());
 		
 		for (int i = 0; i < quantidade && i < topAuxList.size(); i++) {
+			topList.add(topAuxList.get(i));
+		}
+		
+		return topList;
+	}
+
+	public List<Top> consultarRentavel(long idUsuario) throws Exception {
+		List<Transacao> transacoes = _repository.findAllByUsuarioId(idUsuario);
+		List<Top> topAuxList = new ArrayList<Top>();
+		List<Top> topList = new ArrayList<Top>();
+		Date hoje = Calendar.getInstance().getTime();
+		
+		for (Transacao transacao : transacoes) {
+			Previsao previsao = prever(transacao.getId(), hoje);
+			
+			Top top = new Top();
+			top.setInvestimento(transacao.getInvestimento());
+			top.setValor(previsao.getValor());
+			
+			topAuxList.add(top);
+		}
+		
+		Collections.sort(topAuxList, new ComparadorTop());
+		
+		for (int i = 0; i < 1 && i < topAuxList.size(); i++) {
 			topList.add(topAuxList.get(i));
 		}
 		
