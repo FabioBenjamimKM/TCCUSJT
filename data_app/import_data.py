@@ -1,4 +1,5 @@
 from mysql_conn import MySQL
+from scripts.cdi import CDIImport
 from scripts.fact_stock import FactStockImport
 from scripts.ipca import IPCAImport
 from scripts.selic import SELICImport
@@ -17,6 +18,7 @@ def main():
 
     IPCAImport(mysql_obj).run()
     SELICImport(mysql_obj).run()
+    CDIImport(mysql_obj).run()
     TesouroDiretoImport(mysql_obj).run()
     ForexImport(mysql_obj, api_key).run()
     StockImport(mysql_obj, api_key).run()
