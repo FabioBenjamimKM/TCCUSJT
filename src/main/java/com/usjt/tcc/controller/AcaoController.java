@@ -54,7 +54,7 @@ public class AcaoController {
 		return _service.sugestao(number);
 	}
 	
-	@GetMapping("/acoes/sugestao/{idUsuario}")
+	@GetMapping("/acoes/rentavel/{idUsuario}")
 	public List<Acao> consultarRentavel(@PathVariable(value="idUsuario") long idUsuario) throws Exception {
 		return _service.consultarRentavel(idUsuario);
 	}
