@@ -49,9 +49,13 @@ public class TransacaoService {
 		for (Transacao transacao : list) {
 			if(transacao.getInvestimento().getTipoInvestimento().getId() == 1) {
 				List<RendaFixa> xs = _rendaRepository.findDataVencimento(transacao.getInvestimento().getId());
-				listDTO.add(transacao.converter(xs.get(0).getDataVencimento(), xs.get(0).getRendimentoFixo(), transacao.getInvestimento().getTipoInvestimento().getNome()));				
+				if(xs.get(0).getRendimentoVariavel() == null) {
+					listDTO.add(transacao.converter(xs.get(0).getDataVencimento(), xs.get(0).getRendimentoFixo(), null));
+				} else {
+					listDTO.add(transacao.converter(xs.get(0).getDataVencimento(), xs.get(0).getRendimentoFixo(), xs.get(0).getRendimentoVariavel().getTipoRendimentoVariavel().getNome()));
+				}
 			} else {
-				listDTO.add(transacao.converter(null, null, transacao.getInvestimento().getTipoInvestimento().getNome()));
+				listDTO.add(transacao.converter(null, null, null));
 			}
 		}
 		return listDTO;
