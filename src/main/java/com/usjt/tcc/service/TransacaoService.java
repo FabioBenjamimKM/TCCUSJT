@@ -49,9 +49,9 @@ public class TransacaoService {
 		for (Transacao transacao : list) {
 			if(transacao.getInvestimento().getTipoInvestimento().getId() == 1) {
 				List<RendaFixa> xs = _rendaRepository.findDataVencimento(transacao.getInvestimento().getId());
-				listDTO.add(transacao.converter(xs.get(0).getDataVencimento()));				
+				listDTO.add(transacao.converter(xs.get(0).getDataVencimento(), xs.get(0).getRendimentoFixo(), transacao.getInvestimento().getTipoInvestimento().getNome()));				
 			} else {
-				listDTO.add(transacao.converter(null));
+				listDTO.add(transacao.converter(null, null, transacao.getInvestimento().getTipoInvestimento().getNome()));
 			}
 		}
 		return listDTO;

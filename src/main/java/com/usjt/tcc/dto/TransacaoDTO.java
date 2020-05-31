@@ -21,15 +21,18 @@ public class TransacaoDTO {
 	
 	private RendaFixaService rendaFixaService = new RendaFixaService();
 
-	public TransacaoDTO(long id, float valor, Date data, Investimento investimento, Usuario usuario, Date dataVencimento) {
+	public TransacaoDTO(long id, float valor, Date data, Investimento investimento, Usuario usuario,
+			Date dataVencimento, Float taxaPorcentagem, String nomeTipoTaxa) {
+		
 		this.id = id;
 		this.valor = valor;
 		this.data = data;
 		this.investimento = investimento;
 		this.usuario = usuario;
-		this.dataVencimento = dataVencimento;			
-		
-		
+		this.dataVencimento = dataVencimento;
+		this.taxaPorcentagem = taxaPorcentagem;
+		this.nomeTipoTaxa = nomeTipoTaxa;
+			
 	}
 	
 	private long id;
@@ -45,6 +48,26 @@ public class TransacaoDTO {
     private Usuario usuario;
     
     private Date dataVencimento;
+    
+    private Float taxaPorcentagem;
+    
+    private String nomeTipoTaxa;
+    
+    public Float getTaxaPorcentagem() {
+		return taxaPorcentagem;
+	}
+    
+    public void setTaxaPorcentagem(Float taxaPorcentagem) {
+		this.taxaPorcentagem = taxaPorcentagem;
+	}
+    
+    public void setNomeTipoTaxa(String nomeTipoTaxa) {
+		this.nomeTipoTaxa = nomeTipoTaxa;
+	}
+    
+    public String getNomeTipoTaxa() {
+		return nomeTipoTaxa;
+	}
     
     public Date getDataVencimento() {
 		return dataVencimento;

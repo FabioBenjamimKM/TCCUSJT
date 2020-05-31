@@ -92,7 +92,7 @@ public class Transacao implements Serializable{
 		this.usuario = usuario;
 	}
 	
-	public TransacaoDTO converter(java.util.Date date) {
-		return new TransacaoDTO(this.id, this.valor, this.data, this.investimento, this.usuario, date);
+	public TransacaoDTO converter(java.util.Date date, Float taxa, String nomeTaxa) {
+		return new TransacaoDTO(this.id, this.valor, this.data, this.investimento, this.usuario, date, taxa, nomeTaxa);
 	}
 }
