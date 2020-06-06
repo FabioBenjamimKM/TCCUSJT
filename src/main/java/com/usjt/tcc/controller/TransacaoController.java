@@ -57,7 +57,7 @@ public class TransacaoController {
 	@GetMapping("/transacao/prever/{id}&{data}")
 	public Previsao prever(@PathVariable(value="id") long id, @PathVariable(value="data") String dataString) throws Exception {
 		
-		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		Date data = null;
 		
 		try {
