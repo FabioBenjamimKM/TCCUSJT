@@ -43,10 +43,11 @@ public class TransacaoService {
 		return _repository.findAll();
 	}
 	
-	public List<TransacaoDTO> consultarPorUsuarioId(long usuarioId) {
+	public List<TransacaoDTO> consultarPorUsuarioId(Long usuarioId) {
 		List<Transacao> list = _repository.findAllByUsuarioId(usuarioId);
 		List<TransacaoDTO> listDTO = new ArrayList<TransacaoDTO>();
 		for (Transacao transacao : list) {
+			transacao.setData(ArrumaData(transacao.getData()));
 			if(transacao.getInvestimento().getTipoInvestimento().getId() == 1) {
 				List<RendaFixa> xs = _rendaRepository.findDataVencimento(transacao.getInvestimento().getId());
 				if(xs.get(0).getRendimentoVariavel() == null) {
@@ -62,6 +63,17 @@ public class TransacaoService {
 			}
 		}
 		return listDTO;
+	}
+	
+	public Date ArrumaData(Date data){
+		// Através do Calendar, trabalhamos a data informada e adicionamos 1 dia nela
+		Calendar c = Calendar.getInstance();
+		c.setTime(data);
+		c.add(Calendar.DATE, +1);
+
+		// Obtemos a data alterada
+		data = c.getTime();
+		return data;
 	}
 	
 	public Transacao consultar(long transacaoId) {
