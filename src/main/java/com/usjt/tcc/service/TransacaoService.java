@@ -52,7 +52,10 @@ public class TransacaoService {
 				if(xs.get(0).getRendimentoVariavel() == null) {
 					listDTO.add(transacao.converter(xs.get(0).getDataVencimento(), xs.get(0).getRendimentoFixo(), null));
 				} else {
-					listDTO.add(transacao.converter(xs.get(0).getDataVencimento(), xs.get(0).getRendimentoFixo(), xs.get(0).getRendimentoVariavel().getTipoRendimentoVariavel().getNome()));
+					Float TaxaRendimentoFixo = xs.get(0).getRendimentoFixo();
+					Float Taxa = xs.get(0).getRendimentoVariavel().getValor();
+					Float SomaTaxas = Taxa + TaxaRendimentoFixo;
+					listDTO.add(transacao.converter(xs.get(0).getDataVencimento(), SomaTaxas, xs.get(0).getRendimentoVariavel().getTipoRendimentoVariavel().getNome()));
 				}
 			} else {
 				listDTO.add(transacao.converter(null, null, null));
