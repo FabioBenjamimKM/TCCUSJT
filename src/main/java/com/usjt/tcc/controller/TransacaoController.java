@@ -69,9 +69,9 @@ public class TransacaoController {
 		return _service.prever(id, data);
 	}
 	
-	@DeleteMapping("/transacao/{id}")
-	public void excluir(@PathVariable(value="id") Long id) {
-		_service.excluir(id);
+	@DeleteMapping("/transacao")
+	public void excluir(@RequestBody Transacao transacao) {
+		_service.excluir(transacao);
 	}
 	
 	@PostMapping("/transacao")
