@@ -86,8 +86,8 @@ public class TransacaoService {
 		return _repository.save(transacao);
 	}
 	
-	public void excluir(Transacao transacao) {
-		_repository.delete(transacao);
+	public void excluir(Long id) {
+		_repository.deleteById(id);
 	}
 	
 	public Previsao prever(long id, Date data) throws Exception {
