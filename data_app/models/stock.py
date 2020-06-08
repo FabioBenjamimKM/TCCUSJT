@@ -18,6 +18,16 @@ class Stock:
         """
         return self.mysql_obj.execute_read_query(query)
 
+    def get_all_by_investment_id(self, investment_id):
+        query = f"""SELECT 
+                alta, baixa, fechamento_ajustado, data
+            FROM
+                {self.table_name}
+            WHERE
+                id_investimento = {investment_id}
+        """
+        return self.mysql_obj.execute_read_query(query)
+
     def get_all_latest(self):
         latest_date_query = f"""SELECT MAX(data) FROM {self.table_name}"""
         latest_date = self.mysql_obj.execute_read_query(latest_date_query)

@@ -86,7 +86,9 @@ USD_BRL_NAME = 'Paridade Dólar/Real'
 
 INVESTMENT_TYPE = {
     'fixed_income': 'Renda Fixa',
-    'variable_income': 'Renda Variável'
+    'variable_income': 'Renda Variável',
+    'fixed_income_id': 1,
+    'variable_income_id': 2,
 }
 
 EXCHANGE_RATE_SYMBOLS = {
