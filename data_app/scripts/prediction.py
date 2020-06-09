@@ -11,12 +11,14 @@ from sklearn.model_selection import TimeSeriesSplit
 
 class Prediction:
     stocks = pd.DataFrame()
+    prediction = pd.DataFrame()
     X = np.array([])
     Y = np.array([])
     x_train = np.array([])
     y_train = np.array([])
     x_valid = np.array([])
     y_valid = np.array([])
+    model = LinearRegression()
 
     def __init__(self, mysql_obj):
         self.mysql_obj = mysql_obj
@@ -28,6 +30,7 @@ class Prediction:
                 self.load_df(investment_id[0])
                 if not self.stocks.empty:
                     self.train()
+                    self.predict()
                     self.save_prediction()
 
     def get_investment_ids(self):
@@ -46,43 +49,18 @@ class Prediction:
             self.stocks = df.sort_index(ascending=True)
 
     def train(self):
-        # self.split_target()
         self.add_moving_average()
         self.split_training()
         self.linear_regression()
 
-    # def split_target(self):
-    #     # A variable for predicting 'n' days out into the future
-    #     forecast_out = 30  # 'n = 30' days
-    #     # Create another column (the target ) shifted 'n' units up
-    #     self.stocks['prediction'] = self.stocks[['adjusted_close']].shift(-forecast_out)
-    #
-    #     X = np.array(self.stocks.drop(['prediction'], 1))
-    #
-    #     # Remove the last '30' rows
-    #     self.X = X[:-forecast_out]
-    #
-    #     # Create the dependent data set (y)
-    #     # Convert the dataframe to a numpy array
-    #     Y = np.array(self.stocks['prediction'])
-    #     # Get all of the y values except the last '30' rows
-    #     self.Y = Y[:-forecast_out]
-
     def add_moving_average(self):
         self.stocks = self.stocks.drop(['low', 'high'], axis=1)
-        self.stocks['moving_average_21'] = self.stocks.adjusted_close.rolling(window=21).mean()
+        self.stocks['moving_average_30'] = self.stocks.adjusted_close.rolling(window=30).mean()
         self.stocks['moving_average_7'] = self.stocks.adjusted_close.rolling(window=7).mean()
         # Removing stocks without moving average
-        self.stocks = self.stocks[20:]
+        self.stocks = self.stocks[29:]
 
     def split_training(self):
-        # tscv = TimeSeriesSplit(n_splits=2)
-        # for train_index, test_index in tscv.split(self.X):
-        #     print("TRAIN:", train_index, "TEST:", test_index)
-        #     X_train, X_test = self.X[train_index], self.X[test_index]
-        #     y_train, y_test = self.Y[train_index], self.Y[test_index]
-        # split into train and validation
-
         stocks_split = int(len(self.stocks) * 0.7)
 
         train = self.stocks[:stocks_split]
@@ -94,12 +72,36 @@ class Prediction:
         self.y_valid = valid['adjusted_close']
 
     def linear_regression(self):
-        model = LinearRegression()
-        model.fit(self.x_train, self.y_train)
+        self.model.fit(self.x_train, self.y_train)
         # make predictions and find the rmse
-        preds = model.predict(self.x_valid)
+        preds = self.model.predict(self.x_valid)
         rms = np.sqrt(np.mean(np.power((np.array(self.y_valid) - np.array(preds)), 2)))
         print(rms)
+
+    def predict(self):
+        self.generate_nan_rows()
+        pred = self.prediction
+        one_day = np.timedelta64(1, 'D')
+        seven_days = np.timedelta64(7, 'D')
+        thirty_days = np.timedelta64(30, 'D')
+        for i, stock_data in pred.iterrows():
+            if np.isnan(stock_data.adjusted_close):
+                pred.loc[i].moving_average_7 = pred.loc[i - seven_days:i - one_day].moving_average_7.mean()
+                pred.loc[i].moving_average_30 = pred.loc[i - thirty_days:i - one_day].moving_average_30.mean()
+                # predict
+                pred.loc[i].adjusted_close = self.model.predict([pred.loc[i].drop('adjusted_close')])
+
+    def generate_nan_rows(self):
+        num_days = 30
+        current_day = self.stocks.iloc[-1].name
+        num_days_td = np.timedelta64(num_days, 'D')
+        self.prediction = self.stocks[-30:].copy()
+        prediction_future = pd.DataFrame()
+        prediction_future['day'] = pd.date_range(current_day, current_day + num_days_td, freq='B')
+        prediction_future.set_index(['day'], inplace=True)
+        series_nan = pd.Series({'adjusted_close': np.nan, 'moving_average_30': np.nan, 'moving_average_7': np.nan})
+        for index, values in prediction_future.iterrows():
+            self.prediction.loc[index] = series_nan
 
     def save_prediction(self):
         pass
