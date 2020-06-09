@@ -11,7 +11,7 @@ class FixedIncome:
         self.mysql_obj = mysql_obj
         self.table_name = TABLE_NAMES['fixed_income']
 
-    def insert(self, date, due_date, annual_profitability, investment_id, variable_income_id=None):
+    def insert(self, date, due_date, annual_profitability, investment_id, minimum_investment, variable_income_id=None):
         name = f'{due_date} - {annual_profitability}'
         print(f'Inserting fixed income: {name}')
         if self.get_id(date, due_date, annual_profitability, investment_id, variable_income_id):
@@ -20,16 +20,16 @@ class FixedIncome:
             if variable_income_id:
                 insert = f"""
                 INSERT INTO
-                    {self.table_name} (data, data_vencimento, rendimento_fixo, id_investimento, id_rendimento_variavel)
+                    {self.table_name} (data, data_vencimento, rendimento_fixo, id_investimento, id_rendimento_variavel, valor_minimo)
                 VALUES
-                    ('{date}', '{due_date}', {annual_profitability}, {investment_id}, {variable_income_id})
+                    ('{date}', '{due_date}', {annual_profitability}, {investment_id}, {variable_income_id}, {minimum_investment})
                 """
             else:
                 insert = f"""
                 INSERT INTO
-                    {self.table_name} (data, data_vencimento, rendimento_fixo, id_investimento)
+                    {self.table_name} (data, data_vencimento, rendimento_fixo, id_investimento, valor_minimo)
                 VALUES
-                    ('{date}', '{due_date}', {annual_profitability}, {investment_id})
+                    ('{date}', '{due_date}', {annual_profitability}, {investment_id}, {minimum_investment})
                 """
             self.mysql_obj.execute_query(insert)
 
@@ -61,6 +61,13 @@ class FixedIncome:
 
         for titulo_publico in titulos_publicos_df.itertuples():
             investment_id = investment.get_id(titulo_publico.title)
+            try:
+                minimum_investment = titulo_publico.minimum_investment
+            except AttributeError:
+                # Títulos para resgate, não têm investimento mínimo
+                # https://www.tesourodireto.com.br/titulos/precos-e-taxas.htm > "Resgatar"
+                minimum_investment = 'NULL'
+
             if len(titulo_publico.annual_profitability) > 1:
                 variable_income_id = variable_income.get_id_by_name(titulo_publico.annual_profitability[1])
                 if not variable_income_id:
@@ -70,6 +77,7 @@ class FixedIncome:
                     titulo_publico.due_date,
                     titulo_publico.annual_profitability[0],
                     investment_id,
+                    minimum_investment,
                     variable_income_id
                 )
             else:
@@ -77,5 +85,6 @@ class FixedIncome:
                     today,
                     titulo_publico.due_date,
                     titulo_publico.annual_profitability[0],
-                    investment_id
+                    investment_id,
+                    minimum_investment
                 )
