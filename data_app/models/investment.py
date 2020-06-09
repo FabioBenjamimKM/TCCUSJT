@@ -37,3 +37,9 @@ class Investment:
                 ids_str += f', {str(id_investment)}'
         query = f"""SELECT id, nome FROM {self.table_name} WHERE id IN ({ids_str})"""
         return self.mysql_obj.execute_read_query(query)
+
+    def get_all_by_investment_type_id(self, investment_type_id):
+        query = f"""
+            SELECT id from tb_investimento where {self.table_name}.id_tipo_investimento = {investment_type_id};
+        """
+        return self.mysql_obj.execute_read_query(query)
