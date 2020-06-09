@@ -54,7 +54,7 @@ def setup():
 
 def args():
     parser = ArgumentParser()
-    parser.add_argument('-f', '--full', default=False, help='Full import')
+    parser.add_argument('-f', '--full', action='store_true', default=False, help='Full import')
     args = parser.parse_args()
     return args.full
 
