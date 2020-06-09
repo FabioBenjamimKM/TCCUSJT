@@ -1,3 +1,4 @@
+import random
 import time
 
 from alpha_vantage.timeseries import TimeSeries
@@ -10,21 +11,28 @@ from models.stock import Stock
 
 
 class StockImport:
-    def __init__(self, mysql_obj, api_key):
+    df = pd.DataFrame()
+
+    def __init__(self, mysql_obj, api_key, full_import):
         self.mysql_obj = mysql_obj
         self.api_key = api_key
         self.investment = {
             'name': '',
             'symbol': ''
         }
-        self.df = None
+        self.full_import = full_import
 
     def run(self):
         five_api_calls_per_minute = 60 / 5
 
         self.insert_investment_type()
 
-        for investment_symbol, investment_name in TICKERS.items():
+        if self.full_import:
+            tickers = TICKERS.items()
+        else:
+            tickers = [random.choice(list(TICKERS.items())) for i in range(10)]
+
+        for investment_symbol, investment_name in tickers:
             self.investment['name'] = investment_name
             self.investment['symbol'] = investment_symbol
             self.create_df()
@@ -34,7 +42,10 @@ class StockImport:
 
     def create_df(self):
         ts = TimeSeries(self.api_key)
-        data, meta_data = ts.get_daily_adjusted(symbol=self.investment['symbol'], outputsize='full')
+        if self.full_import:
+            data, meta_data = ts.get_daily_adjusted(symbol=self.investment['symbol'], outputsize='full')
+        else:
+            data, meta_data = ts.get_daily_adjusted(symbol=self.investment['symbol'], outputsize='compact')
         data_df = pd.DataFrame(data)
         data_df = data_df.T
         data_df.columns = [

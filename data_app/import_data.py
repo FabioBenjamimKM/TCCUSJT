@@ -1,3 +1,5 @@
+from argparse import ArgumentParser
+
 from mysql_conn import MySQL
 from scripts.cdi import CDIImport
 from scripts.fact_stock import FactStockImport
@@ -15,6 +17,7 @@ except ImportError:
 
 
 def main():
+    full_import = args()
     mysql_obj, api_key = setup()
 
     IPCAImport(mysql_obj).run()
@@ -22,7 +25,7 @@ def main():
     CDIImport(mysql_obj).run()
     TesouroDiretoImport(mysql_obj).run()
     ForexImport(mysql_obj, api_key).run()
-    StockImport(mysql_obj, api_key).run()
+    StockImport(mysql_obj, api_key, full_import).run()
 
     FactStockImport(mysql_obj).run()
 
@@ -47,6 +50,13 @@ def setup():
     else:
         api_key = API_KEY
     return mysql_obj, api_key
+
+
+def args():
+    parser = ArgumentParser()
+    parser.add_argument('-f', '--full', default=False, help='Full import')
+    args = parser.parse_args()
+    return args.full
 
 
 if __name__ == '__main__':
