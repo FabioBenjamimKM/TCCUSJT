@@ -1,5 +1,6 @@
 package com.usjt.tcc.repository;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -20,4 +21,6 @@ public interface AcaoRepository extends JpaRepository<Acao, Long>{
 
 	@Query(nativeQuery = true, value = "select * from tb_acao where data LIKE '2020-05%' and id_investimento = :id")
 	List<Acao> findByIdData(@Param("id")long id);
+	
+	Optional<Acao> findFirstByInvestimentoIdAndData(long id, Calendar data);
 }

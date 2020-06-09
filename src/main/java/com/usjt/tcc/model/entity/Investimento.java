@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.usjt.tcc.dto.InvestimentoDTO;
+
 @Entity
 @Table(name="TB_INVESTIMENTO")
 public class Investimento implements Serializable{
@@ -52,5 +54,9 @@ public class Investimento implements Serializable{
 
 	public void setTipoInvestimento(TipoInvestimento tipoInvestimento) {
 		this.tipoInvestimento = tipoInvestimento;
+	}
+	
+	public InvestimentoDTO converter(float valorMinimo) {
+		return new InvestimentoDTO(this.id, this.nome, this.tipoInvestimento, valorMinimo);
 	}
 }

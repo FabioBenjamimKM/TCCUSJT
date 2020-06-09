@@ -32,6 +32,9 @@ public class RendaFixa implements Serializable{
 	@Column(nullable = false)
 	private Date data;
 	
+	@Column(nullable = true)
+	private float valorMinimo;
+	
 	@ManyToOne
 	@JoinColumn(name="id_rendimento_variavel")
 	private RendimentoVariavel rendimentoVariavel;
@@ -72,6 +75,14 @@ public class RendaFixa implements Serializable{
 		this.data = data;
 	}
 
+	public float getValorMinimo() {
+		return valorMinimo;
+	}
+
+	public void setValorMinimo(float valorMinimo) {
+		this.valorMinimo = valorMinimo;
+	}
+	
 	public RendimentoVariavel getRendimentoVariavel() {
 		return rendimentoVariavel;
 	}

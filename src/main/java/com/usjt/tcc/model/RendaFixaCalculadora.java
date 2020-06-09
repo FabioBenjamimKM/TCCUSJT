@@ -22,7 +22,7 @@ public class RendaFixaCalculadora implements ICalculadora {
 		previsao.setData(data);
 		
 		long idInvestimento = transacao.getInvestimento().getId();
-		Optional<RendaFixa> rendaFixaOptional = _repositoryRendaFixa.findFirstByInvestimentoIdAndData(idInvestimento, transacao.getData());
+		Optional<RendaFixa> rendaFixaOptional = _repositoryRendaFixa.findFirstByInvestimentoId(idInvestimento);
 		RendimentoVariavel rendimentoVariavel = null;
 		
 		if(rendaFixaOptional != null) {
@@ -42,7 +42,7 @@ public class RendaFixaCalculadora implements ICalculadora {
 				
 				float qtdDias = diferencaEmDia(data, transacao.getData());
 				
-				float rendimento = 1 + (qtdDias * (rendeDiarioFixa + rendeDiarioVariavel));
+				float rendimento = 1 + (qtdDias * ((rendeDiarioFixa + rendeDiarioVariavel)/100));
 				
 				float valor = transacao.getValor() * rendimento;
 				

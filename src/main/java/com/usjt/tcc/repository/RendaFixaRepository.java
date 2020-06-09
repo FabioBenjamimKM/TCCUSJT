@@ -14,7 +14,7 @@ import com.usjt.tcc.model.entity.RendaFixa;
 @Repository
 public interface RendaFixaRepository extends JpaRepository<RendaFixa, Long>{
 	
-	Optional<RendaFixa> findFirstByInvestimentoIdAndData(long id, Date data);
+	Optional<RendaFixa> findFirstByInvestimentoId(long id);
 
 	@Query(nativeQuery = true, value = "select * from tb_renda_fixa where id_investimento = :id")
 	List<RendaFixa> findDataVencimento(@Param(value = "id")long id);

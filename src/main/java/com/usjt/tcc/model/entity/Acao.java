@@ -1,6 +1,7 @@
 package com.usjt.tcc.model.entity;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -48,7 +49,7 @@ public class Acao implements Serializable{
 	private float coeficienteDivisao;
 	
 	@Column(nullable = false)
-	private Date data;
+	private Calendar data;
 	
 	@ManyToOne
 	@JoinColumn(name="id_investimento", nullable = false)
@@ -126,11 +127,11 @@ public class Acao implements Serializable{
 		this.coeficienteDivisao = coeficienteDivisao;
 	}
 
-	public Date getData() {
+	public Calendar getData() {
 		return data;
 	}
 
-	public void setData(Date data) {
+	public void setData(Calendar data) {
 		this.data = data;
 	}
 
