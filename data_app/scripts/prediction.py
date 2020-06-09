@@ -4,12 +4,11 @@ from sklearn.linear_model import LinearRegression
 
 from constants import INVESTMENT_TYPE
 from models.investment import Investment
+from models.predicao import Prediction
 from models.stock import Stock
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.model_selection import TimeSeriesSplit
 
 
-class Prediction:
+class PredictionImport:
     stocks = pd.DataFrame()
     prediction = pd.DataFrame()
     X = np.array([])
@@ -31,7 +30,7 @@ class Prediction:
                 if not self.stocks.empty:
                     self.train()
                     self.predict()
-                    self.save_prediction()
+                    self.save_prediction(investment_id[0])
 
     def get_investment_ids(self):
         investment = Investment(self.mysql_obj)
@@ -103,5 +102,5 @@ class Prediction:
         for index, values in prediction_future.iterrows():
             self.prediction.loc[index] = series_nan
 
-    def save_prediction(self):
-        pass
+    def save_prediction(self, investment_id):
+        Prediction(self.mysql_obj).insert_multiple(self.prediction, investment_id)

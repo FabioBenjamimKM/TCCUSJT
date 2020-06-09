@@ -2,7 +2,7 @@ from mysql_conn import MySQL
 from scripts.cdi import CDIImport
 from scripts.fact_stock import FactStockImport
 from scripts.ipca import IPCAImport
-from scripts.prediction import Prediction
+from scripts.prediction import PredictionImport
 from scripts.selic import SELICImport
 from scripts.stock import StockImport
 from scripts.forex import ForexImport
@@ -26,7 +26,7 @@ def main():
 
     FactStockImport(mysql_obj).run()
 
-    Prediction(mysql_obj).run()
+    PredictionImport(mysql_obj).run()
 
     mysql_obj.connection.close()
     print('Data imported successfully!')
