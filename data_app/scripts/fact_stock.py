@@ -5,6 +5,7 @@ from models.dim_time import DimTime
 from models.fact_stock import FactStock
 from models.investment import Investment
 from models.stock import Stock
+from utils import get_past_latest_week_day
 
 
 class FactStockImport:
@@ -46,8 +47,7 @@ class FactStockImport:
 
     def add_past_values_to_df(self):
         latest_date = self.df['date'].unique()[0]
-        td = np.timedelta64(1, 'D')
-        past_date = latest_date - td
+        past_date = get_past_latest_week_day(latest_date)
         stock = Stock(self.mysql_obj)
         stocks = stock.get_close_adjusted_and_investment_id(past_date)
         for s in stocks:

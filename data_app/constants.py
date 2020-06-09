@@ -80,6 +80,7 @@ TABLE_NAMES = {
     'fixed_income': 'tb_renda_fixa',
     'fact_stock': 'fato_acao',
     'dim_time': 'dim_tempo',
+    'prediction': 'tb_acao_previsao',
 }
 
 USD_BRL_NAME = 'Paridade Dólar/Real'

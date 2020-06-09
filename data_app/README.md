@@ -10,6 +10,16 @@ para o selenium utilizar
 6. Pegar sua [key](https://www.alphavantage.co/support/#api-key) na Alpha Vantage
 7. Rodar a importação: ```$ python import_data.py```
 
+### Argumentos
+
+Exemplo: ```$ python import_data.py --full```
+
+| Argumento  | Valor Padrão | Descrição |
+|------------|--------------|-----------|
+| -f / --full |     False    | Importa todos os dados disponíveis (leva mais tempo) |
+
+
+
 ### Opcional
 
 Adicionar arquivo **local_settings.py** com os dados, assim como em **local_settings_example.py**
