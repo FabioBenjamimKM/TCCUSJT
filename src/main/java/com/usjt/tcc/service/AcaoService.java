@@ -83,8 +83,13 @@ public class AcaoService {
 
 	public List<Acao> consultarRentavel(long idUsuario) throws Exception {
 		List<Top> top = transacaoService.consultarRentavel(idUsuario);
-		
-		List<Acao> listRentavel = _repository.findByIdData(top.get(0).getInvestimento().getId());
+		List<Acao> listRentavel = new ArrayList<Acao>();
+		for (Top top2 : top) {
+			if(top2.getInvestimento().getTipoInvestimento().getId() == 2){
+				listRentavel = _repository.findByIdData(top2.getInvestimento().getId());	
+				break;
+			}
+		}
 		
 		return listRentavel;
 	}
