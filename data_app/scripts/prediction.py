@@ -42,7 +42,7 @@ class PredictionImport:
     def load_df(self, investment_id):
         stock = Stock(self.mysql_obj)
         stock_data = stock.get_all_by_investment_id(investment_id)
-        if stock_data and len(stock_data) > 30:
+        if stock_data and len(stock_data) > 60:
             df = pd.DataFrame(stock_data)
             df.columns = ['high', 'low', 'adjusted_close', 'date']
             df.set_index('date', inplace=True)
