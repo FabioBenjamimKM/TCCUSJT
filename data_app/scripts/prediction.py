@@ -85,12 +85,14 @@ class PredictionImport:
         one_day = np.timedelta64(1, 'D')
         seven_days = np.timedelta64(7, 'D')
         thirty_days = np.timedelta64(30, 'D')
+        count = 0
         for i, stock_data in pred.iterrows():
             if np.isnan(stock_data.adjusted_close):
-                pred.loc[i].moving_average_7 = pred.loc[i - seven_days:i - one_day].moving_average_7.mean()
-                pred.loc[i].moving_average_30 = pred.loc[i - thirty_days:i - one_day].moving_average_30.mean()
+                pred.loc[i].moving_average_7 = pred.iloc[count - 7:count - 1].moving_average_7.mean()
+                pred.loc[i].moving_average_30 = pred.iloc[count - 29:count - 1].moving_average_30.mean()
                 # predict
                 pred.loc[i].adjusted_close = self.model.predict([pred.loc[i].drop('adjusted_close')])
+            count += 1
 
     def generate_nan_rows(self):
         num_days = 30
