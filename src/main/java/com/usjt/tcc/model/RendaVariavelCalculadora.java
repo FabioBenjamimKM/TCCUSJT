@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,21 +27,28 @@ public class RendaVariavelCalculadora implements ICalculadora {
 	
 	@Override
 	public Previsao prever(Transacao transacao, Date data) throws Exception {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		
 		Previsao previsao = new Previsao();
 		previsao.setData(data);
 		
+		Calendar dataCalendar = Calendar.getInstance();
+		dataCalendar.setTime(transacao.getData());
+		String dataCalendarString = format.format(data);
+		
 		Calendar dataTransacao = Calendar.getInstance();
 		dataTransacao.setTime(transacao.getData());
+		String dataTransacaoString = format.format(dataTransacao.getTime());
 		
 		long idInvestimento = transacao.getInvestimento().getId();
 		
-		Optional<Predicao> predicaoOptional = _repositoryPredicao.findFirstByInvestimentoIdAndData(idInvestimento, data);
-		Optional<Acao> acaoOptional = _repositoryAcao.findFirstByInvestimentoIdAndData(idInvestimento, dataTransacao);
+		List<Predicao> predicaoOptional = _repositoryPredicao.findByIdData(idInvestimento, dataCalendarString);
+		List<Acao> acaoOptional = _repositoryAcao.findByIdData(idInvestimento, dataTransacaoString);
 		
-		if(predicaoOptional.orElse(null) != null && acaoOptional.orElse(null) != null)
+		if(predicaoOptional.size() > 0 && acaoOptional.size() > 0)
 		{
-			Predicao predicao = predicaoOptional.get();
-			Acao acao = acaoOptional.get();
+			Predicao predicao = predicaoOptional.get(0);
+			Acao acao = acaoOptional.get(0);
 			
 			float qtdAcao = transacao.getValor() / acao.getFechamento();
 			
