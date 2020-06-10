@@ -22,5 +22,8 @@ public interface AcaoRepository extends JpaRepository<Acao, Long>{
 	@Query(nativeQuery = true, value = "select * from tb_acao where data LIKE '2020-05%' and id_investimento = :id")
 	List<Acao> findByIdData(@Param("id")long id);
 	
+	@Query(nativeQuery = true, value = "select * from tb_acao where data = :data and id_investimento = :id")
+	List<Acao> findByIdData(@Param("id")long id, @Param("data")String data);
+	
 	Optional<Acao> findFirstByInvestimentoIdAndData(long id, Calendar data);
 }
