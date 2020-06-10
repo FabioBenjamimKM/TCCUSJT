@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import numpy as np
 import pandas as pd
 from sklearn.linear_model import LinearRegression
@@ -103,4 +105,5 @@ class PredictionImport:
             self.prediction.loc[index] = series_nan
 
     def save_prediction(self, investment_id):
-        Prediction(self.mysql_obj).insert_multiple(self.prediction, investment_id)
+        prediction = self.prediction.loc[pd.to_datetime(datetime.today().date()):]
+        Prediction(self.mysql_obj).insert_multiple(prediction, investment_id)
