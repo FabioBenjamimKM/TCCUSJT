@@ -66,7 +66,7 @@ class FixedIncome:
             except AttributeError:
                 # Títulos para resgate, não têm investimento mínimo
                 # https://www.tesourodireto.com.br/titulos/precos-e-taxas.htm > "Resgatar"
-                minimum_investment = 'NULL'
+                minimum_investment = 0.0
 
             if len(titulo_publico.annual_profitability) > 1:
                 variable_income_id = variable_income.get_id_by_name(titulo_publico.annual_profitability[1])
