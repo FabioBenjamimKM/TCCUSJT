@@ -3,6 +3,8 @@ package com.usjt.tcc.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,12 +13,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
 import com.usjt.tcc.model.entity.Usuario;
 import com.usjt.tcc.dto.PerfilDTO;
 import com.usjt.tcc.model.entity.Perfil;
+import com.usjt.tcc.model.entity.PerfilInvestidor;
 import com.usjt.tcc.model.entity.Usuario;
 import com.usjt.tcc.repository.Perfils;
 import com.usjt.tcc.repository.Usuarios;
@@ -48,11 +52,11 @@ public class UsuariosController {
 	}
 	
 	@PutMapping
-	public ResponseEntity atualizarPerfil(@RequestBody Usuario usuario) {
-		if(usuario.getEmail().matches(".*@.*") && usuario.getPerfil().getCpf().length() == 11) {
-			Perfil perfil = perfils.findByCpf(usuario.getPerfil().getCpf());
-			if(usuario.getPerfil().getPerfil_investidor() != null) {
-				perfil.setPerfil_investidor(usuario.getPerfil().getPerfil_investidor());
+	public ResponseEntity atualizarPerfil(@RequestParam String cpf, @RequestParam PerfilInvestidor perfilInvestidor) {
+		if(cpf.length() == 11) {
+			Perfil perfil = perfils.findByCpf(cpf);
+			if(perfilInvestidor != null) {
+				perfil.setPerfil_investidor(perfilInvestidor);
 				perfils.save(perfil);
 				return new ResponseEntity(HttpStatus.OK);
 			}
