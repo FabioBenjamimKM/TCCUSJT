@@ -55,9 +55,9 @@ public class RendaFixaCalculadora implements ICalculadora {
 		else {
 			throw new Exception("Não foi encontrado os dados atuais do investimento!");
 		}
-		
 		return previsao;
 	}
+	
 	
 	private float rendimentoAnualParaDiario(float rendimentoAnual) {
 		return rendimentoAnual / 365;

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,9 +38,12 @@ public class UsuariosController {
 	}
 	
 	@PostMapping
-	public Usuario createConta(@RequestBody Usuario usuario) {
-		perfils.save(usuario.getPerfil());
-		return usuarios.save(usuario);
+	public ResponseEntity createConta(@RequestBody Usuario usuario) {
+		if(usuario.getEmail().matches(".*@.*") && usuario.getPerfil().getCpf().length() == 11) {
+			perfils.save(usuario.getPerfil());
+			return new ResponseEntity(HttpStatus.OK);
+		}
+		return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
 	}
 	
 	@PostMapping("/{Autentica}")

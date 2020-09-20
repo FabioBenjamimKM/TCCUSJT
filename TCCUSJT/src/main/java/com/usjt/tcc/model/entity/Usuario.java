@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="TB_USUARIO")
 public class Usuario implements Serializable{
-	
+	 
 	private static final long serialVersionUID = 1;
 	
 	@Id
@@ -31,7 +31,7 @@ public class Usuario implements Serializable{
 	@Column(nullable = false)
 	private String senha;
 	
-	@JoinColumn(unique = true)
+	@JoinColumn(unique = true, nullable = false)
 	@OneToOne
 	private Perfil perfil;
 	
