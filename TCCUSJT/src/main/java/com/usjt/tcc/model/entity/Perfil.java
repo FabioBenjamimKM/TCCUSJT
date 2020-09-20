@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -43,6 +45,18 @@ public class Perfil implements Serializable{
 	
 	@Column(nullable = false)
 	private String Estado;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "perfil_investidor", nullable = false)
+	private PerfilInvestidor perfil_investidor;
+	
+	public PerfilInvestidor getPerfil_investidor() {
+		return perfil_investidor;
+	}
+	
+	public void setPerfil_investidor(PerfilInvestidor perfil_investidor) {
+		this.perfil_investidor = perfil_investidor;
+	}
 	
 	public String getCpf() {
 		return cpf;

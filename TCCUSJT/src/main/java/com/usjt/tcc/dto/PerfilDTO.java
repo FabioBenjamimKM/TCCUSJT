@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import javax.persistence.Column;
 
 import com.usjt.tcc.model.entity.Perfil;
+import com.usjt.tcc.model.entity.PerfilInvestidor;
 
 public class PerfilDTO {
 	
@@ -23,6 +24,7 @@ public class PerfilDTO {
 		this.telefone = perfil.getTelefone();
 		this.sexo = perfil.getSexo();
 		this.Estado = perfil.getEstado();
+		this.perfil_investidor = perfil.getPerfil_investidor();
 	}
 	
 	private Long id;
@@ -40,6 +42,16 @@ public class PerfilDTO {
 	private String sexo;
 
 	private String Estado;
+	
+	private PerfilInvestidor perfil_investidor;
+	
+	public PerfilInvestidor getPerfilInvestidor() {
+		return perfil_investidor;
+	}
+	
+	public void setPerfilInvestidor(PerfilInvestidor perfilInvestidor) {
+		this.perfilInvestidor = perfilInvestidor;
+	}
 
 	public Long getId() {
 		return id;
