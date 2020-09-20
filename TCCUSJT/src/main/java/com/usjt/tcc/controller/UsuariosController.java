@@ -46,6 +46,7 @@ public class UsuariosController {
 	public ResponseEntity createConta(@RequestBody Usuario usuario) {
 		if(usuario.getEmail().matches(".*@.*") && usuario.getPerfil().getCpf().length() == 11) {
 			perfils.save(usuario.getPerfil());
+			usuarios.save(usuario);
 			return new ResponseEntity(HttpStatus.OK);
 		}
 		return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
