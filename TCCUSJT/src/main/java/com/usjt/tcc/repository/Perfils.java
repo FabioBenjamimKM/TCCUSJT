@@ -9,6 +9,6 @@ import com.usjt.tcc.model.entity.Usuario;
 
 public interface Perfils extends JpaRepository<Perfil, Long>{
 
-	List<Perfil> findByCpf(String cpf);
+	Perfil findByCpf(String cpf);
 
 }

@@ -50,7 +50,7 @@ public class PerfilDTO {
 	}
 	
 	public void setPerfilInvestidor(PerfilInvestidor perfilInvestidor) {
-		this.perfilInvestidor = perfilInvestidor;
+		this.perfil_investidor = perfilInvestidor;
 	}
 
 	public Long getId() {

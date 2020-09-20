@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,6 +43,19 @@ public class UsuariosController {
 		if(usuario.getEmail().matches(".*@.*") && usuario.getPerfil().getCpf().length() == 11) {
 			perfils.save(usuario.getPerfil());
 			return new ResponseEntity(HttpStatus.OK);
+		}
+		return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
+	}
+	
+	@PutMapping
+	public ResponseEntity atualizarPerfil(@RequestBody Usuario usuario) {
+		if(usuario.getEmail().matches(".*@.*") && usuario.getPerfil().getCpf().length() == 11) {
+			Perfil perfil = perfils.findByCpf(usuario.getPerfil().getCpf());
+			if(usuario.getPerfil().getPerfil_investidor() != null) {
+				perfil.setPerfil_investidor(usuario.getPerfil().getPerfil_investidor());
+				perfils.save(perfil);
+				return new ResponseEntity(HttpStatus.OK);
+			}
 		}
 		return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
 	}

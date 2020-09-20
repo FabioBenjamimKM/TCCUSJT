@@ -47,7 +47,7 @@ public class Perfil implements Serializable{
 	private String Estado;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name = "perfil_investidor", nullable = false)
+	@Column(name = "perfil_investidor", nullable = true)
 	private PerfilInvestidor perfil_investidor;
 	
 	public PerfilInvestidor getPerfil_investidor() {
