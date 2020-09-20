@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.usjt.tcc.model.entity.Usuario;
+import com.usjt.tcc.dto.AtualizaPerfilInvestidorDTO;
 import com.usjt.tcc.dto.PerfilDTO;
 import com.usjt.tcc.model.entity.Perfil;
 import com.usjt.tcc.model.entity.PerfilInvestidor;
@@ -46,17 +47,18 @@ public class UsuariosController {
 	public ResponseEntity createConta(@RequestBody Usuario usuario) {
 		if(usuario.getEmail().matches(".*@.*") && usuario.getPerfil().getCpf().length() == 11) {
 			perfils.save(usuario.getPerfil());
+			usuarios.save(usuario);
 			return new ResponseEntity(HttpStatus.OK);
 		}
 		return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
 	}
 	
 	@PutMapping
-	public ResponseEntity atualizarPerfil(@RequestParam String cpf, @RequestParam PerfilInvestidor perfilInvestidor) {
-		if(cpf.length() == 11) {
-			Perfil perfil = perfils.findByCpf(cpf);
-			if(perfilInvestidor != null) {
-				perfil.setPerfil_investidor(perfilInvestidor);
+	public ResponseEntity atualizarPerfil(@RequestBody AtualizaPerfilInvestidorDTO atualiza) {
+		if(atualiza.getCpf().length() == 11) {
+			Perfil perfil = perfils.findByCpf(atualiza.getCpf());
+			if(atualiza.getPerfil_investidor() != null) {
+				perfil.setPerfil_investidor(atualiza.getPerfil_investidor());
 				perfils.save(perfil);
 				return new ResponseEntity(HttpStatus.OK);
 			}
