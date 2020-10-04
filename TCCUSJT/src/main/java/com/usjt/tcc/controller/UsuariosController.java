@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.usjt.tcc.dto.AtualizaPerfilInvestidorDTO;
@@ -30,7 +31,7 @@ public class UsuariosController {
 	private Perfils perfils;
 	
 	@GetMapping
-	public PerfilDTO getPerfil(String email) {
+	public PerfilDTO getPerfil(@RequestParam String email) {
 		Optional<Usuario> usuario = usuarios.findByEmail(email);
 		Perfil perfil = usuario.get().getPerfil();
 		return PerfilDTO.converterUnico(perfil);
@@ -63,7 +64,7 @@ public class UsuariosController {
 		return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
 	}
 	
-	@PutMapping("/atulizaPerfil")
+	@PutMapping("/atualizaPerfil")
 	public ResponseEntity atualizaPerfil(@RequestBody Perfil perfil) {
 		if(perfil.getId() != null) {
 			Optional<Perfil> perfilChange = perfils.findById(perfil.getId());
