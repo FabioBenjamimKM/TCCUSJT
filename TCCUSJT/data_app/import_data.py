@@ -9,6 +9,7 @@ from scripts.selic import SELICImport
 from scripts.stock import StockImport
 from scripts.forex import ForexImport
 from scripts.tesouro_direto import TesouroDiretoImport
+from scripts.suggestion import SuggestionImport
 
 try:
     from local_settings import API_KEY, DB_USER, DB_PASSWORD
@@ -20,16 +21,18 @@ def main():
     full_import = args()
     mysql_obj, api_key = setup()
 
-    IPCAImport(mysql_obj).run()
-    SELICImport(mysql_obj).run()
-    CDIImport(mysql_obj).run()
-    TesouroDiretoImport(mysql_obj).run()
-    ForexImport(mysql_obj, api_key).run()
-    StockImport(mysql_obj, api_key, full_import).run()
+    # IPCAImport(mysql_obj).run()
+    # SELICImport(mysql_obj).run()
+    # CDIImport(mysql_obj).run()
+    # TesouroDiretoImport(mysql_obj).run()
+    # ForexImport(mysql_obj, api_key).run()
+    # StockImport(mysql_obj, api_key, full_import).run()
 
-    FactStockImport(mysql_obj).run()
+    # FactStockImport(mysql_obj).run()
 
-    PredictionImport(mysql_obj).run()
+    # PredictionImport(mysql_obj).run()
+
+    SuggestionImport(mysql_obj).run()
 
     mysql_obj.connection.close()
     print('Data imported successfully!')

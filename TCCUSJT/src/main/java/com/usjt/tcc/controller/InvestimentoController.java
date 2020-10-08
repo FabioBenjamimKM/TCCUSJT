@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.usjt.tcc.dto.InvestimentoDTO;
-import com.usjt.tcc.model.Sugestao;
 import com.usjt.tcc.model.entity.Investimento;
 import com.usjt.tcc.repository.InvestimentoRepository;
 import com.usjt.tcc.service.AcaoService;
