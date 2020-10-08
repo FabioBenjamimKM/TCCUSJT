@@ -16,8 +16,8 @@ import com.usjt.tcc.model.entity.Acao;
 public interface AcaoRepository extends JpaRepository<Acao, Long>{
 	List<Acao> findByData(Date data);
 
-	@Query(nativeQuery = true, value = "select * from tb_acao where data LIKE '2020-05%' and id_investimento = :number")
-	List<Acao> findByTopSugestao(@Param("number")Integer number);
+	@Query(nativeQuery = true, value = "select * from tb_acao where id_investimento = :idInvestimento")
+	List<Acao> findByTopSugestao(@Param("idInvestimento")long idInvestimento);
 
 	@Query(nativeQuery = true, value = "select * from tb_acao where data LIKE '2020-05%' and id_investimento = :id")
 	List<Acao> findByIdData(@Param("id")long id);
@@ -26,4 +26,7 @@ public interface AcaoRepository extends JpaRepository<Acao, Long>{
 	List<Acao> findByIdData(@Param("id")long id, @Param("data")String data);
 	
 	Optional<Acao> findFirstByInvestimentoIdAndData(long id, Calendar data);
+
+	@Query(nativeQuery = true, value = "SELECT * FROM TB_ACAO GROUP BY ID_INVESTIMENTO HAVING MIN(DATA)")
+	List<Acao> obterAbertura();
 }

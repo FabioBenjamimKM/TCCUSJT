@@ -10,5 +10,4 @@ import com.usjt.tcc.model.entity.Investimento;
 import com.usjt.tcc.model.entity.RendaFixa;
 
 public interface InvestimentoRepository extends JpaRepository<Investimento, Long> {
-
 }

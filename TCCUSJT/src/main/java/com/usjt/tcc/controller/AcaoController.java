@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,10 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.usjt.tcc.model.Lucro;
-import com.usjt.tcc.model.Sugestao;
 import com.usjt.tcc.model.entity.Acao;
+import com.usjt.tcc.model.entity.Sugestao;
 import com.usjt.tcc.service.AcaoService;
+import com.usjt.tcc.service.SugestaoService;
 
 @RestController
 @RequestMapping("/api")
@@ -23,15 +22,15 @@ public class AcaoController {
 
 	@Autowired
 	private AcaoService _service;
+
+	@Autowired
+	private SugestaoService _serviceSugestao;
 	
-	@GetMapping("/acoes/crescimento/{quantidade}")
-	public List<Sugestao> consultarPorCrescimento(@PathVariable(value="quantidade") int quantidade) {
-		return _service.consultarPorCrescimento(quantidade);
-	}
-	
-	@GetMapping("/acoes/regularidade/{quantidade}")
-	public List<Sugestao> consultarPorRegularidade(@PathVariable(value="quantidade") int quantidade) {
-		return _service.consultarPorRegularidade(quantidade);
+	@GetMapping("/acoes/sugestao/{idTipoSugestao}&{posicao}")
+	public List<Acao> sugestao(@PathVariable(value="idTipoSugestao") int idTipoSugestao, @PathVariable(value="posicao") int posicao) {
+		Sugestao sugestao = _serviceSugestao.consultar(idTipoSugestao, posicao);
+		
+		return _service.sugestao(sugestao.getInvestimento().getId());
 	}
 	
 	@GetMapping("/acoes/{data}")
@@ -48,12 +47,7 @@ public class AcaoController {
 		
 		return _service.consultar(data);
 	}
-	
-	@GetMapping("/acoes/sugestao/{number}")
-	public List<Acao> sugestao(@PathVariable(value="number") Integer number){
-		return _service.sugestao(number);
-	}
-	
+
 	@GetMapping("/acoes/rentavel/{idUsuario}")
 	public List<Acao> consultarRentavel(@PathVariable(value="idUsuario") long idUsuario) throws Exception {
 		return _service.consultarRentavel(idUsuario);
