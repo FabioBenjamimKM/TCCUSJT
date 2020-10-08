@@ -1,11 +1,9 @@
-from bs4 import BeautifulSoup
+import requests
 
 from models.variable_income import VariableIncome
 from models.variable_income_type import VariableIncomeType
-from selenium_connector import SeleniumConnector
-from utils import format_float
 
-URL = 'http://www.b3.com.br/pt_br/'
+URL = 'https://api.hgbrasil.com/finance/taxes?key={}'
 
 
 class CDIImport:
@@ -13,30 +11,17 @@ class CDIImport:
     cdi_html = ''
     cdi_value = 0.0
 
-    def __init__(self, mysql_obj):
+    def __init__(self, mysql_obj, api_key_hgbrasil):
         self.mysql_obj = mysql_obj
+        self.api_key_hgbrasil = api_key_hgbrasil
 
     def run(self):
-        self.search_data()
-        self.find_data_in_html()
-        self.parse_data()
+        self.get_value()
         self.insert_data()
 
-    def search_data(self):
-        print('Searching data')
-        selenium = SeleniumConnector(URL, options=['--headless', '--no-sandbox'])
-        html = selenium.get_html()
-        self.soup = BeautifulSoup(html, 'html.parser')
-
-    def find_data_in_html(self):
-        print('Parsing data')
-        cdi_html = self.soup.find('div', id='taxaPct')
-        if not cdi_html:
-            raise ValueError('Não foi possível buscar os dados do CDI, tente novamente')
-        self.cdi_html = cdi_html
-
-    def parse_data(self):
-        self.cdi_value = format_float(self.cdi_html.text)
+    def get_value(self):
+        response = requests.get(URL.format(self.api_key_hgbrasil))
+        self.cdi_value = response.json()['results'][0]['cdi_daily']
 
     def insert_data(self):
         name = 'CDI'
