@@ -24,7 +24,7 @@ class IPCAImport:
 
     def search_data(self):
         print('Searching data')
-        selenium = SeleniumConnector(URL, options=['--headless'])
+        selenium = SeleniumConnector(URL, options=['--headless', '--no-sandbox'])
         html = selenium.get_html()
         self.soup = BeautifulSoup(html, 'html.parser')
 
