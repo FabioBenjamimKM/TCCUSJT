@@ -23,66 +23,65 @@ import com.usjt.tcc.repository.Usuarios;
 @RestController
 @RequestMapping("/login")
 public class UsuariosController {
-	
-	@Autowired
-	private Usuarios usuarios;
-	
-	@Autowired
-	private Perfils perfils;
-	
-	@GetMapping
-	public PerfilDTO getPerfil(@RequestParam String email) {
-		Optional<Usuario> usuario = usuarios.findByEmail(email);
-		Perfil perfil = usuario.get().getPerfil();
-		return PerfilDTO.converterUnico(perfil);
-	}
-	
-	@PostMapping
-	public ResponseEntity createConta(@RequestBody Usuario usuario) {
-		if(usuario.getEmail().matches(".*@.*") && usuario.getPerfil().getCpf().length() == 11) {
-			Integer cpfValue = Integer.parseInt(usuario.getPerfil().getCpf());
-			String cpfValueString = cpfValue.toString();
-			if(cpfValueString.substring(1).equals(cpfValueString.substring(2))) {
-				perfils.save(usuario.getPerfil());
-				usuarios.save(usuario);
-				return new ResponseEntity(HttpStatus.OK);				
-			}
-		}
-		return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
-	}
-	
-	@PutMapping
-	public ResponseEntity atualizarPerfil(@RequestBody AtualizaPerfilInvestidorDTO atualiza) {
-		if(atualiza.getCpf().length() == 11) {
-			Perfil perfil = perfils.findByCpf(atualiza.getCpf());
-			if(atualiza.getPerfil_investidor() != null) {
-				perfil.setPerfil_investidor(atualiza.getPerfil_investidor());
-				perfils.save(perfil);
-				return new ResponseEntity(HttpStatus.OK);
-			}
-		}
-		return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
-	}
-	
-	@PutMapping("/atualizaPerfil")
-	public ResponseEntity atualizaPerfil(@RequestBody Perfil perfil) {
-		if(perfil.getId() != null) {
-			Optional<Perfil> perfilChange = perfils.findById(perfil.getId());
-			perfilChange.get().atualizaPerfil(perfil);
-			perfils.save(perfilChange.get());
-			return new ResponseEntity(HttpStatus.OK);
-		}
-		return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
-	}
-	
-	@PostMapping("/{Autentica}")
-	public ResponseEntity<Boolean> Login(@RequestBody Usuario usuarioRequest) {
-		Optional<Usuario> usuario = usuarios.findByEmail(usuarioRequest.getEmail());
-		if (usuario != null && usuario.get().getSenha().equals(usuarioRequest.getSenha())) {
-			return ResponseEntity.ok(true);	
-		} else {
-			return (ResponseEntity<Boolean>) ResponseEntity.badRequest();
-		}
-	}
+
+    @Autowired
+    private Usuarios usuarios;
+
+    @Autowired
+    private Perfils perfils;
+
+    @GetMapping
+    public PerfilDTO getPerfil(@RequestParam String email) {
+        Optional<Usuario> usuario = usuarios.findByEmail(email);
+        Perfil perfil = usuario.get().getPerfil();
+        return PerfilDTO.converterUnico(perfil);
+    }
+
+    @PostMapping
+    public ResponseEntity createConta(@RequestBody Usuario usuario) {
+        if (usuario.getEmail().matches(".*@.*") && usuario.getPerfil().getCpf().length() == 11) {
+            // Integer cpfValue = Integer.parseInt(usuario.getPerfil().getCpf());
+            // String cpfValueString = cpfValue.toString();
+            String cpfValueString = usuario.getPerfil().getCpf();
+            perfils.save(usuario.getPerfil());
+            usuarios.save(usuario);
+            return new ResponseEntity(HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
+    }
+
+    @PutMapping
+    public ResponseEntity atualizarPerfil(@RequestBody AtualizaPerfilInvestidorDTO atualiza) {
+        if (atualiza.getCpf().length() == 11) {
+            Perfil perfil = perfils.findByCpf(atualiza.getCpf());
+            if (atualiza.getPerfil_investidor() != null) {
+                perfil.setPerfil_investidor(atualiza.getPerfil_investidor());
+                perfils.save(perfil);
+                return new ResponseEntity(HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
+    }
+
+    @PutMapping("/atualizaPerfil")
+    public ResponseEntity atualizaPerfil(@RequestBody Perfil perfil) {
+        if (perfil.getId() != null) {
+            Optional<Perfil> perfilChange = perfils.findById(perfil.getId());
+            perfilChange.get().atualizaPerfil(perfil);
+            perfils.save(perfilChange.get());
+            return new ResponseEntity(HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.NOT_ACCEPTABLE);
+    }
+
+    @PostMapping("/{Autentica}")
+    public ResponseEntity<Boolean> Login(@RequestBody Usuario usuarioRequest) {
+        Optional<Usuario> usuario = usuarios.findByEmail(usuarioRequest.getEmail());
+        if (usuario != null && usuario.get().getSenha().equals(usuarioRequest.getSenha())) {
+            return ResponseEntity.ok(true);
+        } else {
+            return (ResponseEntity<Boolean>) ResponseEntity.badRequest();
+        }
+    }
 
 }
