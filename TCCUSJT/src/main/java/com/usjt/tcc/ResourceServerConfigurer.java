@@ -13,5 +13,7 @@ public class ResourceServerConfigurer extends ResourceServerConfigurerAdapter{
 		http.authorizeRequests()
 			.anyRequest()
 			.permitAll();
+		
+		//http.authorizeRequests().anyRequest().authenticated();
 	}
 }

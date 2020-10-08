@@ -19,6 +19,15 @@ import javax.persistence.Table;
 @Table(name="TB_PERFIL")
 public class Perfil implements Serializable{
 	
+	public void atualizaPerfil(Perfil perfil) {
+		this.nome = perfil.getNome();
+		this.endereco = perfil.getEndereco();
+		this.Estado = perfil.getEstado();
+		this.telefone = perfil.getTelefone();
+		this.idade = perfil.getIdade();
+		this.sexo = perfil.getSexo();
+	}
+	
 	private static final long serialVersionUID = 1;
 	
 	@Id
