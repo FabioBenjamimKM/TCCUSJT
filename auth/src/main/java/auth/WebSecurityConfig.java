@@ -6,13 +6,16 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+
 @Configuration
-public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter{
+@EnableWebSecurity
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override @Bean
 	protected AuthenticationManager authenticationManager() throws Exception {
@@ -33,8 +36,8 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter{
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.inMemoryAuthentication()
 			.passwordEncoder(passwordEncoder())
-			.withUser("tcc")
-			.password(passwordEncoder().encode("admin"))
+			.withUser("tcc-tamburu")
+			.password(passwordEncoder().encode("tentando"))
 			.roles("TCC");
 	}
 	

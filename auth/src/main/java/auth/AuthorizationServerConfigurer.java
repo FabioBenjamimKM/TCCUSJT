@@ -24,7 +24,7 @@ public class AuthorizationServerConfigurer extends AuthorizationServerConfigurer
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.inMemory()
-			.withClient("tcc")
+			.withClient("tamburu")
 			.secret(passwordEncoder.encode("admin"))
 			.authorizedGrantTypes("password", "refresh_token")
 			.accessTokenValiditySeconds(60*60*24)

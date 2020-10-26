@@ -9,18 +9,21 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 @SpringBootApplication
 @EnableAuthorizationServer
 @EnableResourceServer
 @RestController
-public class Auth2TccApplication {
+public class AuthApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Auth2TccApplication.class, args);
+		SpringApplication.run(AuthApplication.class, args);
 	}
 	
 	@RequestMapping("/user")
 	public Principal user(Principal user) {
+		System.out.println("Oi");
 		return user;
 	}
 
