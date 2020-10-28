@@ -40,7 +40,6 @@ public class UserController {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
-	@Secured({ Const.ROLE_ADMIN })
 	@PostMapping
 	public ResponseEntity<User> save(@RequestBody UserDTO userDTO) {
 		List<Role> roles = new ArrayList<Role>();

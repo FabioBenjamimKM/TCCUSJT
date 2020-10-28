@@ -32,12 +32,10 @@ public class DataInitializr implements ApplicationListener<ContextRefreshedEvent
     public void onApplicationEvent(ContextRefreshedEvent arg0) {
 
         List<User> users = userRepository.findAll();
-
         if (users.isEmpty()) {
             createUser("admin", "admin", passwordEncoder.encode("admin"), Const.ROLE_ADMIN);
             createUser("client", "client", passwordEncoder.encode("client"), Const.ROLE_CLIENT);
         }
-
     }
 
     public void createUser(String name, String email, String password, String roleName) {
