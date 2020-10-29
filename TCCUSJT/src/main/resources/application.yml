@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost/SISTEMA_INVESTIMENTO?createDatabaseIfNotExist=true&useTimezone=true&serverTimezone=UTC
     username: root
-    password: tamburu
+    password: 12345678
   jpa:
     hibernate.ddl-auto: update
     properties:
