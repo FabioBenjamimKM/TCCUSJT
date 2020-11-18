@@ -15,4 +15,7 @@ import org.springframework.stereotype.Repository;
 public interface SugestaoRepository extends JpaRepository<Sugestao, Long> {
     @Query(value = "SELECT s FROM Sugestao s WHERE s.tipoSugestao.id = :id AND s.data LIKE CONCAT('%',:data,'%') ORDER BY s.valor ASC")
     List<Sugestao> find(@Param("id")long id,  @Param("data")String data);
+
+    @Query(value = "SELECT s FROM Sugestao s WHERE s.tipoSugestao.id = :id AND s.data LIKE CONCAT('%',:data,'%') AND s.investimento.tipoInvestimento.id IN :idTipoInvestimentoList ORDER BY s.valor DESC")
+    List<Sugestao> buscarPorTipoInvestimento(@Param("id")long id,  @Param("data")String data,  @Param("idTipoInvestimentoList")List<Long> idTipoInvestimentoList);
 }
