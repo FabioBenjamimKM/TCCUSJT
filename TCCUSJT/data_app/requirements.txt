@@ -1,7 +1,0 @@
-alpha_vantage
-beautifulsoup4
-mysql-connector-python
-numpy
-pandas
-selenium
-scikit-learn
