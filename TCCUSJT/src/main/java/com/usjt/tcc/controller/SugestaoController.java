@@ -21,6 +21,6 @@ public class SugestaoController {
     
     @GetMapping("/sugestao/{idUsuario}&{posicao}")
 	public SugestaoInvestimento sugestao(@PathVariable(value="idUsuario") int idUsuario, @PathVariable(value="posicao") int posicao) {
-		return _service.sugestaoPorUsuario(3, idUsuario).get(posicao);
+		return _service.sugestaoPorUsuario(3, idUsuario, posicao);
 	}
 }

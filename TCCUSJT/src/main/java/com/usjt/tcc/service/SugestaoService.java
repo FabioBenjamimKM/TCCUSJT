@@ -8,9 +8,11 @@ import java.util.List;
 import java.util.Optional;
 
 import com.usjt.tcc.model.SugestaoInvestimento;
+import com.usjt.tcc.model.entity.Acao;
 import com.usjt.tcc.model.entity.Perfil;
 import com.usjt.tcc.model.entity.Sugestao;
 import com.usjt.tcc.model.entity.Usuario;
+import com.usjt.tcc.repository.AcaoRepository;
 import com.usjt.tcc.repository.Perfils;
 import com.usjt.tcc.repository.SugestaoRepository;
 import com.usjt.tcc.repository.Usuarios;
@@ -27,13 +29,16 @@ public class SugestaoService {
     @Autowired
     private Usuarios _usuarioRepository;
 
+    @Autowired
+    private AcaoRepository _acaoRepository;
+
     public Sugestao consultar(long idTipoSugestao, int posicao){
         List<Sugestao> sugestoes = _repository.find(idTipoSugestao, getDataHoje());
 
         return sugestoes.get(posicao);
     }
 
-    public List<SugestaoInvestimento> sugestaoPorUsuario(long idTipoSugestao, long idUsuario){
+    public SugestaoInvestimento sugestaoPorUsuario(long idTipoSugestao, long idUsuario, int posicao){
         Optional<Usuario> usuario = _usuarioRepository.findById(idUsuario);
         Perfil perfil = usuario.get().getPerfil();
 
@@ -41,7 +46,14 @@ public class SugestaoService {
 
         List<Sugestao> sugestaoList = _repository.buscarPorTipoInvestimento(idTipoSugestao, getDataHoje(), idTipoInvestimentoList);
 
-        return convert(sugestaoList);
+        SugestaoInvestimento sugestaoInvestimento = convert(sugestaoList).get(posicao);
+
+        if(sugestaoInvestimento.getInvestimento().getTipoInvestimento().getId() == 2){
+            List<Acao> acoes = _acaoRepository.findByTopSugestao(sugestaoInvestimento.getInvestimento().getId());
+            sugestaoInvestimento.setAcoes(acoes);
+        }
+        
+        return sugestaoInvestimento; 
     }
 
     private String getDataHoje(){
@@ -59,7 +71,6 @@ public class SugestaoService {
                 idTipoInvestimentoList.add((long)1);
                 break;
             case "Diversificado":
-                idTipoInvestimentoList.add((long)1);
                 idTipoInvestimentoList.add((long)2);
                 break;
             case "Agressivo":
